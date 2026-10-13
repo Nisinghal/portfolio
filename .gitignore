@@ -1,0 +1,20 @@
+﻿# Operating System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Raw uncompressed camera source files (not used in web build)
+assets/sonder/*.JPG
+assets/sonder/*.png
+assets/sonder/3.jpg
+assets/sonder/4-web.jpg
+assets/sonder/5.JPG
+assets/sonder/6-web.jpg
+assets/sonder/7-web.jpg
+assets/sonder/8.JPG
+assets/sonder/references-web.jpg
+
+# Development logs & temporary files
+*.log
+.system_generated/
+scratch/

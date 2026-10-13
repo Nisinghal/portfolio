@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sonder · Nishtha Singhal</title>
+  <meta name="description" content="Sonder: An interactive installation exploring public presence, physical agency, and the profound interiority of passing strangers.">
+  
+  <!-- Modern Typefaces: Geist & Host Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <main class="page-container">
+
+    <!-- Top Navigation -->
+    <nav class="case-nav fade-in">
+      <a href="index.html" class="back-link">
+        <span class="back-arrow" aria-hidden="true">←</span>
+        <span>Home</span>
+      </a>
+    </nav>
+
+    <!-- Case Header -->
+    <header class="case-header fade-in">
+      <h1 class="case-title">Sonder</h1>
+      <p class="case-subtitle">
+        An interactive installation exploring public presence, physical agency, and the profound interiority of passing strangers.
+      </p>
+
+      <div class="case-meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">Role &amp; Execution</span>
+          <span class="meta-value">Individual Project: Spatial staging, optical mechanics, 360° narrative design, and physical fabrication.</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Timeline &amp; Context</span>
+          <span class="meta-value">3 Months · 2022<br>National Institute of Design (NID), Gandhinagar · Staging</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Domain</span>
+          <span class="meta-value">Interaction Design · Spatial Staging · New Media Art · Analog-Digital Systems</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Apparatus</span>
+          <span class="meta-value">Dual-Mirror Rotating Periscope, Gyroscopic 360° Viewport, Spatial Sound</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Core Statement / Pull Quote -->
+    <section class="case-section fade-in">
+      <blockquote class="quote-block">
+        <p class="quote-text">
+          “We believe we are the main character in the solo movie of the universe, but alas, our film is just one of many. Everyone else, the people we think are supporting and background cast in our lives, live as the protagonists of their own narratives.”
+        </p>
+      </blockquote>
+    </section>
+
+    <!-- Installation Showcase Videos (HD Facade with 1080p Playback) -->
+    <section class="case-section fade-in">
+      <!-- Video 1: Installation Walkthrough -->
+      <div class="video-frame video-poster-frame" data-video-id="53iywI9yFjo" data-title="Sonder Eye: An Installation Walkthrough">
+        <img 
+          src="assets/sonder-yt.jpg" 
+          alt="Sonder Eye: An Installation Walkthrough video preview" 
+          class="video-facade-img"
+          loading="eager"
+        >
+        <button class="video-play-btn" aria-label="Play Sonder Eye Installation Walkthrough video">
+          <svg viewBox="0 0 68 48" width="68" height="48">
+            <path class="play-btn-bg" d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fill-opacity="0.8"></path>
+            <path d="M 45,24 27,14 27,34" fill="#ffffff"></path>
+          </svg>
+        </button>
+      </div>
+      <p class="media-caption">Exhibition walkthrough: Outdoor threshold booth, campus walkway staging, and visitor interaction in public space.</p>
+
+      <!-- Video 2: The Inside 360 Video -->
+      <div class="video-frame video-poster-frame" style="margin-top: 2rem;" data-video-id="S2Ry-ndmFaY" data-title="Sonder Eye: Park 360° Video">
+        <img 
+          src="assets/sonder-park-360-poster.jpg" 
+          alt="Sonder Eye: Park 360° Video preview" 
+          class="video-facade-img"
+          loading="lazy"
+        >
+        <span class="video-badge-360">360° Interactive View</span>
+        <button class="video-play-btn" aria-label="Play Sonder Eye Park 360° Video">
+          <svg viewBox="0 0 68 48" width="68" height="48">
+            <path class="play-btn-bg" d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#212121" fill-opacity="0.8"></path>
+            <path d="M 45,24 27,14 27,34" fill="#ffffff"></path>
+          </svg>
+        </button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;">
+        <p class="media-caption" style="margin: 0;">The 360° film experienced inside the periscope viewport. Click and drag in the frame to rotate the view, mirroring the physical periscope rotation.</p>
+        <a href="https://youtu.be/S2Ry-ndmFaY" target="_blank" rel="noopener noreferrer" class="project-link" style="font-size: 0.85rem;">
+          <span>Open on YouTube ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- The Concept: Sonder -->
+    <section class="case-section fade-in">
+      <p class="section-label">The Concept</p>
+      <h2 class="section-heading">Stepping into Another Person's Shoes</h2>
+      <p class="body-paragraph">
+        We often move through public spaces assuming we are the main character in the solo movie of the universe, treating everyone around us as supporting extras. But every stranger has a life just as vivid, complicated, and full of highs and lows as our own: a realization known as <em>sonder</em>.
+      </p>
+      <p class="body-paragraph">
+        In crowded environments, people rarely pause. We form quick, two-dimensional judgments of passersby or keep our distance out of habit. <em>Sonder Eye</em> creates an intentional pause: a quiet, standalone viewing bubble placed directly along a busy pedestrian walkway.
+      </p>
+      <p class="body-paragraph">
+        Inside, the viewer steps up to a suspended periscope looking out into a distant park across the world. Looking through the eyepiece, you encounter snippets of everyday human moments, prompting you to focus on a random stranger, imagine their past and present, their highs and lows, and recognize them as the lead character in their own story. After a few moments, you step away, carry their story with you, and rejoin the crowd with a renewed sense of empathy.
+      </p>
+
+      <div class="comparison-grid">
+        <div>
+          <h3 class="comparison-col-title">Physical Viewport vs. Isolated VR</h3>
+          <p class="body-paragraph" style="font-size: 0.95rem;">
+            VR headsets isolate the user and create awkward hesitation in open public spaces. The physical periscope offers an immediate, walk-up encounter with zero friction: anyone can step up and peer inside without putting on hardware.
+          </p>
+        </div>
+        <div>
+          <h3 class="comparison-col-title">Physical Agency &amp; Tactile Navigation</h3>
+          <p class="body-paragraph" style="font-size: 0.95rem;">
+            Rather than passively watching a flat screen, the visitor physically holds the wooden handle and turns the periscope to pan the view. Taking physical control of where you look creates a deliberate, personal commitment to discovering each person's story.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISITOR JOURNEY (Moved up after Concept as requested) -->
+    <section class="case-section fade-in">
+      <p class="section-label">Visitor Experience</p>
+      <h2 class="section-heading">A Five-Stage Spatial Journey</h2>
+
+      <div class="journey-flow">
+        <div class="journey-step">
+          <span class="step-num">01 / The Pathway</span>
+          <h4 class="step-title">Walking the Path</h4>
+          <p class="step-desc">Moving through the busy campus walkway, seeing passersby as background figures.</p>
+        </div>
+        <div class="journey-step">
+          <span class="step-num">02 / The Threshold</span>
+          <h4 class="step-title">Entering the Bubble</h4>
+          <p class="step-desc">Stepping past the blackout curtain into a quiet, terracotta-walled sanctuary.</p>
+        </div>
+        <div class="journey-step">
+          <span class="step-num">03 / The Artifact</span>
+          <h4 class="step-title">Approaching the Periscope</h4>
+          <p class="step-desc">Taking hold of the turned-wood handle and looking into the optical eyepiece.</p>
+        </div>
+        <div class="journey-step">
+          <span class="step-num">04 / The Encounter</span>
+          <h4 class="step-title">Exploring the 360° View</h4>
+          <p class="step-desc">Physically rotating the column to follow strangers and discover their stories.</p>
+        </div>
+        <div class="journey-step">
+          <span class="step-num">05 / Re-entry</span>
+          <h4 class="step-title">Rejoining the Crowd</h4>
+          <p class="step-desc">Stepping back out onto the path with awakened empathy for the people walking past.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The System: Optical Architecture & Gyroscopic Navigation -->
+    <section class="case-section fade-in">
+      <p class="section-label">The System</p>
+      <h2 class="section-heading">Dual-Mirror Mechanics &amp; Gyroscopic Navigation</h2>
+      <p class="body-paragraph">
+        The installation functions as an analog-digital folding instrument. Instead of an open aperture looking outside, a smartphone is securely mounted in the upper right slot with its screen facing <strong>inward</strong> toward the top mirror, continuously looping the 360° park video.
+      </p>
+      <p class="body-paragraph">
+        Light emitted from the screen reflects off the top 45° mirror, travels vertically straight down through the hollow optical column, strikes the bottom 45° mirror, and projects horizontally out through the eyehole into the viewer’s eye. Mounted on a heavy 360° rotational turntable bearing, grasping the turned-wood handle physically turns the column, triggering the phone’s onboard gyroscope to pan through the 360° scene in real time.
+      </p>
+
+      <!-- Accurate 1:1 System Schematic -->
+      <div class="media-frame" style="background: #fcfcfb; padding: 0.5rem; border: 1px solid var(--color-border); border-radius: var(--radius-md);">
+        <img 
+          src="assets/sonder-system-schematic.svg" 
+          alt="Sonder Eye: Periscope optical assembly, inward smartphone mount, and gyroscopic navigation mechanics" 
+          style="width: 100%; height: auto; display: block;" 
+          loading="lazy"
+        >
+      </div>
+      <p class="media-caption">The analog-digital system: 1. Dual 45° internal mirrors folding light into the eyehole. 2. Inward-mounted phone playing the 360° park film. 3. Turned-wood handles. 4. Base bearing enabling 360° physical rotation.</p>
+    </section>
+
+    <!-- Spatial Staging & Physical Build -->
+    <section class="case-section fade-in">
+      <p class="section-label">Spatial Staging</p>
+      <h2 class="section-heading">Threshold Booth &amp; Physical Build</h2>
+      <p class="body-paragraph">
+        I staged the installation directly along the central pedestrian walkway at NID Gandhinagar. A standalone timber booth draped in blackout canvas stood under the outdoor tree canopy, creating a quiet, shaded bubble in the middle of a busy campus corridor.
+      </p>
+      <p class="body-paragraph">
+        Inside, the terracotta-painted enclosure sheltered the visitor from outdoor glare and ambient chatter, creating an intimate space to focus entirely on the periscope.
+      </p>
+
+      <div class="media-frame">
+        <img 
+          src="assets/sonder/3-web.jpg" 
+          alt="The black exhibition booth positioned in the outdoor courtyard pathway among trees with students walking past" 
+          loading="lazy"
+        >
+      </div>
+      <p class="media-caption">Site Staging: Standalone blackout booth positioned along the primary campus pedestrian walkway.</p>
+
+      <!-- Two-column Real Artifact Photos -->
+      <div class="two-col-media">
+        <div>
+          <div class="media-frame">
+            <img 
+              src="assets/sonder/8-web.jpg" 
+              alt="Periscope suspended inside the terracotta-painted chamber with wooden steering handles" 
+              loading="lazy"
+            >
+          </div>
+          <p class="media-caption">The hand-crafted periscope suspended inside the terracotta booth with its turned-wood grip handle.</p>
+        </div>
+        <div>
+          <div class="media-frame">
+            <img 
+              src="assets/sonder/5-web.jpg" 
+              alt="Visitor inside the darkened chamber engaging with the periscope" 
+              loading="lazy"
+            >
+          </div>
+          <p class="media-caption">Visitor interaction: Stepping into the booth, grasping the handle, and steering through the 360° park scene.</p>
+        </div>
+      </div>
+
+      <p class="body-paragraph" style="margin-top: 1.5rem;">
+        <strong>Fabrication:</strong> Laser-cut timber chassis, dual 45° internal acrylic mirrors, hand-turned wooden grip handle, and a smooth 360° rotational turntable bearing.
+      </p>
+    </section>
+
+    <!-- Theoretical Precedents -->
+    <section class="case-section fade-in">
+      <p class="section-label">Theoretical Grounding</p>
+      <h2 class="section-heading">Conceptual Influences</h2>
+      <ul class="comparison-list">
+        <li><strong>John Koenig (2012)</strong>: <em>The Dictionary of Obscure Sorrows</em>. Origin of the word <em>Sonder</em>: the realization that each random passerby is living a life as vivid and complex as your own.</li>
+        <li><strong>Edward W. Said (1978)</strong>: <em>Orientalism</em>. The social construction of the "Other", and how our minds reduce strangers to flat caricatures.</li>
+        <li><strong>Stanley Milgram (1972)</strong>: <em>The Familiar Stranger</em>. Research on urban anonymity, mutual co-presence, and unspoken recognition among city dwellers.</li>
+        <li><strong>Jane Jacobs (1961)</strong>: <em>The Death and Life of Great American Cities</em>. The sidewalk ballet of daily observation, public trust, and civic encounters.</li>
+      </ul>
+    </section>
+
+    <!-- Project Pagination Nav -->
+    <nav class="pagination-nav fade-in" aria-label="Project Navigation">
+      <a href="index.html" class="pagination-item">
+        <span class="pagination-label">Overview</span>
+        <span class="pagination-title">← All Projects</span>
+      </a>
+      <a href="emotat.html" class="pagination-item next">
+        <span class="pagination-label">Next Project</span>
+        <span class="pagination-title">EmoTat ↗</span>
+      </a>
+    </nav>
+
+    <!-- Bottom Footer -->
+    <footer class="portfolio-footer fade-in">
+      <div class="footer-inner">
+        <p class="footer-callout">
+          Open to conversations about interactive and experience&nbsp;design
+        </p>
+        <nav class="footer-contacts" aria-label="Contact links">
+          <a href="mailto:nishthasinghal.in@gmail.com" class="contact-link">
+            <span>nishthasinghal.in@gmail.com</span>
+            <span class="link-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="contact-link">
+            <span>LinkedIn</span>
+            <span class="link-arrow" aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
