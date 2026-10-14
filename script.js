@@ -259,3 +259,71 @@ function initHeroAscii() {
   draw();
 }
 
+// ==========================================================================
+// INTERACTIVE "NOW SHELF" & CAT MASCOT
+// ==========================================================================
+
+// 3D Book hover & touch toggle
+function openBook() {
+  const cover = document.getElementById('bookCover');
+  if (cover) cover.classList.add('open');
+}
+function closeBook() {
+  const cover = document.getElementById('bookCover');
+  if (cover) cover.classList.remove('open');
+}
+function toggleBook() {
+  const cover = document.getElementById('bookCover');
+  if (cover) cover.classList.toggle('open');
+}
+
+// Quotes cycle for cat companion
+const catQuotes = [
+  "available for hire. not available for mornings. ☕",
+  "every 'edge case' is someone's entire lived experience.",
+  "good design is invisible. bad design becomes an emergency meeting.",
+  "five users will tell you more than five hundred assumptions.",
+  "the best interface is the one you stop noticing.",
+  "typography is the voice. layout is the argument.",
+  "physical computing is just teaching matter how to talk back.",
+  "whitespace isn't empty. it's doing the work quietly."
+];
+let catQuoteIdx = 0;
+
+function boopCat() {
+  catQuoteIdx = (catQuoteIdx + 1) % catQuotes.length;
+  const bubble = document.getElementById('catBubble');
+  if (!bubble) return;
+  bubble.style.opacity = '0';
+  bubble.style.transform = 'translateX(-50%) translateY(4px)';
+  setTimeout(() => {
+    bubble.textContent = catQuotes[catQuoteIdx];
+    bubble.style.opacity = '1';
+    bubble.style.transform = 'translateX(-50%) translateY(0)';
+  }, 150);
+}
+
+// Subtle cat patrol animation along shelf
+// Flipping ONLY the cat sprite so the speech bubble and quote text NEVER mirror
+document.addEventListener('DOMContentLoaded', () => {
+  const rover = document.getElementById('catRover');
+  const catGif = document.getElementById('catGif');
+  if (!rover || !catGif) return;
+
+  let pos = 20;
+  let dir = 1;
+  setInterval(() => {
+    pos += dir * 0.15;
+    if (pos > 75) {
+      dir = -1;
+      catGif.style.transform = 'scaleX(-1)';
+    }
+    if (pos < 10) {
+      dir = 1;
+      catGif.style.transform = 'scaleX(1)';
+    }
+    rover.style.left = pos + '%';
+  }, 50);
+});
+
+

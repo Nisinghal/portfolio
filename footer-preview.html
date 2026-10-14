@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Footer Directions · Nishtha Singhal</title>
+  
+  <!-- Modern Typefaces: Geist, Host Grotesk & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ==========================================================================
+       PREVIEW CONTROLLER BAR
+       ========================================================================== */
+    .preview-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: rgba(252, 252, 251, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .preview-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .preview-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-secondary);
+    }
+
+    .preview-tabs {
+      display: flex;
+      gap: 0.35rem;
+      background: var(--color-surface);
+      padding: 3px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+    }
+
+    .preview-tab-btn {
+      border: none;
+      background: transparent;
+      padding: 0.45rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      font-family: inherit;
+      color: var(--color-text-secondary);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .preview-tab-btn:hover {
+      color: var(--color-text-primary);
+    }
+
+    .preview-tab-btn.active {
+      background: #ffffff;
+      color: var(--color-text-primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      font-weight: 600;
+    }
+
+    /* Simulation of page content above footer */
+    .preview-context-header {
+      padding: 2.5rem 0 1.5rem;
+      text-align: center;
+      border-bottom: 1px dashed var(--color-border);
+      margin-bottom: 2.5rem;
+    }
+    .preview-context-header p {
+      font-size: 0.85rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Container for directions */
+    .direction-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .direction-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .direction-descriptor {
+      margin-bottom: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--color-surface);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--color-text-primary);
+    }
+    .direction-descriptor h3 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 0.35rem;
+    }
+    .direction-descriptor p {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       DIRECTION A: TACTILE "NOW SHELF" + CAT COMPANION + 2-COLUMN SPLIT FOOTER
+       ========================================================================== */
+    .now-shelf-wrap {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .shelf-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid var(--color-border);
+      padding-bottom: 0.85rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .shelf-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    .shelf-hint {
+      font-size: 0.78rem;
+      color: var(--color-text-tertiary);
+    }
+
+    .shelf-items-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .shelf-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      text-align: center;
+    }
+
+    .shelf-item-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Vinyl Turntable */
+    .vinyl-player {
+      width: 96px;
+      height: 96px;
+      position: relative;
+      cursor: pointer;
+    }
+    .vinyl-disc {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: radial-gradient(circle,
+        #D4D0CC 0%, #D4D0CC 22%,
+        #111111 22%, #111111 24%,
+        #0C0720 24%, #0C0720 36%,
+        #1C0E45 36%, #1C0E45 38%,
+        #0C0720 38%, #0C0720 52%,
+        #1C0E45 52%, #1C0E45 54%,
+        #0C0720 54%, #0C0720 68%,
+        #1C0E45 68%, #1C0E45 70%,
+        #0C0720 70%
+      );
+      animation: vinylSpin 5s linear infinite;
+      animation-play-state: running;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      position: relative;
+    }
+    .vinyl-player:hover .vinyl-disc {
+      animation-duration: 2.2s;
+    }
+    .vinyl-center-art {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.15);
+      z-index: 2;
+    }
+    .vinyl-hole {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 7px;
+      height: 7px;
+      background: #000;
+      border-radius: 50%;
+      z-index: 3;
+    }
+    .vinyl-arm {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 2px;
+      height: 38px;
+      background: #888;
+      transform-origin: top right;
+      transform: rotate(24deg);
+      transition: transform 0.3s ease;
+      z-index: 4;
+    }
+    .vinyl-player:hover .vinyl-arm {
+      transform: rotate(32deg);
+    }
+    @keyframes vinylSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* 3D Book */
+    .book-scene {
+      width: 76px;
+      height: 102px;
+      perspective: 500px;
+      cursor: pointer;
+      position: relative;
+    }
+    .b-book {
+      width: 76px;
+      height: 102px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(-12deg);
+      transition: transform 0.35s ease;
+    }
+    .book-scene:hover .b-book {
+      transform: rotateY(-18deg) translateY(-2px);
+    }
+    .b-pages {
+      position: absolute;
+      inset: 2px 0 2px 2px;
+      background: linear-gradient(to right, #B8A882, #F0E8D5);
+      border-radius: 0 4px 4px 0;
+    }
+    .b-inside {
+      position: absolute;
+      inset: 2px 2px 2px 4px;
+      background: #F5EDD8;
+      border-radius: 0 3px 3px 0;
+      padding: 8px 6px;
+      font-size: 6px;
+      line-height: 1.4;
+      color: #7A6855;
+      overflow: hidden;
+    }
+    .b-cover {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 5;
+    }
+    .book-scene:hover .b-cover,
+    .b-cover.open {
+      transform: rotateY(-155deg);
+    }
+    .b-cover-front {
+      position: absolute;
+      inset: 0;
+      background: #4A3428;
+      border-radius: 2px 4px 4px 2px;
+      backface-visibility: hidden;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 8px 6px;
+      color: #f7eed8;
+    }
+    .b-cover-front img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .b-cover-back {
+      position: absolute;
+      inset: 0;
+      background: #38241A;
+      transform: rotateY(180deg);
+      backface-visibility: hidden;
+    }
+
+    /* Retro Pixel TV */
+    .tv-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .tv-body {
+      width: 104px;
+      background: #181818;
+      border: 2px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 7px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    }
+    .tv-screen {
+      width: 86px;
+      height: 60px;
+      background: #000;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .tv-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) contrast(1.1);
+    }
+    .tv-live-tag {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      background: rgba(220, 38, 38, 0.9);
+      color: #fff;
+      font-size: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .tv-live-tag::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+    }
+    .tv-overlay-title {
+      position: absolute;
+      bottom: 4px;
+      left: 4px;
+      right: 4px;
+      background: rgba(0,0,0,0.65);
+      color: #fff;
+      font-size: 7px;
+      font-weight: 600;
+      padding: 1px 4px;
+      border-radius: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tv-controls {
+      display: flex;
+      justify-content: flex-end;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .tv-knob {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #3a3a3a;
+    }
+    .tv-stand {
+      width: 32px;
+      height: 6px;
+      background: #282828;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .shelf-item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .shelf-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .shelf-sub {
+      font-size: 0.72rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Walking Cat Companion on Shelf */
+    .cat-shelf-runner {
+      position: relative;
+      width: 100%;
+      height: 64px;
+      margin-top: 1.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed var(--color-border);
+    }
+    .cat-rover {
+      position: absolute;
+      bottom: 0;
+      left: 20%;
+      cursor: pointer;
+      user-select: none;
+      transition: left 0.1s linear;
+    }
+    .cat-gif {
+      width: 68px;
+      image-rendering: pixelated;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+    .cat-rover:active .cat-gif {
+      transform: scaleY(0.85) scaleX(1.15);
+    }
+    .cat-speech-bubble {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 1px solid var(--color-text-primary);
+      border-radius: 12px 12px 12px 2px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+      pointer-events: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 10;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .cat-speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 12px;
+      border: 5px solid transparent;
+      border-top-color: var(--color-text-primary);
+    }
+
+    /* Balanced 2-Column Split Footer */
+    .split-footer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: clamp(2.5rem, 5vw, 4rem) 0 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    @media (min-width: 768px) {
+      .split-footer {
+        grid-template-columns: 1.35fr 1fr;
+        align-items: start;
+        gap: 3.5rem;
+      }
+    }
+
+    .split-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .footer-big-heading {
+      font-size: clamp(1.6rem, 2.8vw, 2.1rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.22;
+      color: var(--color-text-primary);
+    }
+
+    .footer-sub-lead {
+      font-size: 0.95rem;
+      font-weight: 350;
+      color: var(--color-text-secondary);
+      line-height: 1.55;
+      max-width: 480px;
+    }
+
+    .footer-availability-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-top: 0.5rem;
+    }
+    .availability-dot {
+      width: 7px;
+      height: 7px;
+      background: #16a34a;
+      border-radius: 50%;
+      box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+    }
+
+    .split-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-action-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.15rem;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--color-text-primary);
+      transition: all 0.25s ease;
+    }
+    .contact-action-card:hover {
+      background: #ffffff;
+      border-color: var(--color-text-primary);
+      transform: translateX(3px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .card-label-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .card-sub-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-tertiary);
+    }
+    .card-main-text {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* Colophon Bar */
+    .footer-colophon {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid var(--color-border-subtle);
+      font-size: 0.78rem;
+      color: var(--color-text-tertiary);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    /* ==========================================================================
+       DIRECTION B: STORYBOOK / DOODLY THOUGHT MACHINE + WARM CENTERED FOOTER
+       ========================================================================== */
+    .doodly-wrap {
+      background: #faf9f5;
+      border: 1px solid #ede8de;
+      border-radius: 16px;
+      padding: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .doodly-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .doodly-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #e2ddd3;
+      color: #555;
+    }
+
+    .doodle-character-stage {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .doodle-character-stage {
+        grid-template-columns: 130px 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    /* Hand drawn avatar illustration */
+    .doodle-avatar-box {
+      width: 110px;
+      height: 110px;
+      background: #fff;
+      border: 1.5px solid #1a1a1a;
+      border-radius: 50% 45% 55% 48% / 48% 52% 48% 52%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: 3px 3px 0 #1a1a1a;
+      position: relative;
+    }
+
+    .doodle-quote-card {
+      background: #fff;
+      border: 1.5px solid #1a1a1a;
+      border-radius: 14px;
+      padding: 1.75rem 2rem;
+      box-shadow: 4px 4px 0 #1a1a1a;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .doodle-quote-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #1a1a1a;
+    }
+    .doodle-quote-card:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 #1a1a1a;
+    }
+
+    .doodle-quote-text {
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      font-weight: 500;
+      color: #1a1a1a;
+      line-height: 1.45;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.015em;
+    }
+
+    .doodle-quote-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: #666;
+    }
+
+    .doodle-shuffle-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: #1a1a1a;
+      font-weight: 500;
+    }
+
+    /* Centered Storybook Contact */
+    .storybook-contact {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .storybook-heading {
+      font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+    }
+
+    .storybook-pill-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ==========================================================================
+       DIRECTION C: STUDIO DASHBOARD & ROTATING MARQUEE TICKER
+       ========================================================================== */
+    .dashboard-wrap {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+
+    .dashboard-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .dashboard-cell {
+      padding: 1.5rem 1.25rem;
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .dashboard-cell:last-child {
+      border-right: none;
+    }
+    @media (max-width: 768px) {
+      .dashboard-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+      }
+    }
+
+    .dash-cell-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-tertiary);
+    }
+
+    .dash-cell-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+
+    .dash-cell-sub {
+      font-size: 0.78rem;
+      color: var(--color-text-secondary);
+    }
+
+    .audio-bars {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+      margin-left: 0.5rem;
+    }
+    .bar {
+      width: 2px;
+      background: var(--color-text-primary);
+      animation: barBounce 1s ease-in-out infinite alternate;
+    }
+    .bar:nth-child(1) { height: 4px; animation-delay: 0.1s; }
+    .bar:nth-child(2) { height: 10px; animation-delay: 0.3s; }
+    .bar:nth-child(3) { height: 7px; animation-delay: 0.2s; }
+    @keyframes barBounce {
+      to { height: 12px; }
+    }
+
+    /* Live Quote Marquee */
+    .quote-ticker-bar {
+      background: #ffffff;
+      border-top: 1px solid var(--color-border);
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+    }
+    .ticker-icon {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+    }
+    .ticker-content {
+      font-size: 0.92rem;
+      color: var(--color-text-primary);
+      font-weight: 450;
+      flex-grow: 1;
+    }
+    .ticker-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Minimal Architectural 3-Way Footer */
+    .architectural-footer {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      padding: 3rem 0 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+    @media (max-width: 768px) {
+      .architectural-footer {
+        grid-template-columns: 1fr;
+      }
+    }
+    .arch-col h4 {
+      font-size: 0.72rem;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-tertiary);
+      margin-bottom: 0.75rem;
+    }
+    .arch-col p, .arch-col a {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
+      text-decoration: none;
+      display: block;
+    }
+    .arch-col a:hover {
+      color: var(--color-text-primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Bar to compare directions -->
+  <aside class="preview-bar">
+    <div class="preview-title">
+      <span>Footer Direction Showcase</span>
+      <span class="preview-badge">Interactive Review</span>
+    </div>
+
+    <div class="preview-tabs">
+      <button class="preview-tab-btn active" onclick="switchDirection('dir-a', this)">
+        1. "Now Shelf" &amp; Walking Mascot
+      </button>
+      <button class="preview-tab-btn" onclick="switchDirection('dir-b', this)">
+        2. Storybook &amp; Changing Quotes
+      </button>
+      <button class="preview-tab-btn" onclick="switchDirection('dir-c', this)">
+        3. Studio Dashboard &amp; Ticker
+      </button>
+    </div>
+  </aside>
+
+  <main class="page-container">
+
+    <div class="preview-context-header">
+      <p>✦ Selected Projects Section Ends Above · Compare the 3 Interactive Footer Directions Below ✦</p>
+    </div>
+
+    <!-- ======================================================================
+         DIRECTION A: THE TACTILE "NOW SHELF" + CAT COMPANION + 2-COLUMN SPLIT
+         ====================================================================== -->
+    <section id="dir-a" class="direction-pane active">
+      <div class="direction-descriptor">
+        <h3>Direction 1: The Tactile "Now Shelf" + Animated Cat Companion + Balanced 2-Column Footer</h3>
+        <p>
+          Brings back your beloved interactive favorites shelf: <strong>spinning vinyl record player</strong> with album artwork, <strong>3D interactive book</strong> that opens on hover, and <strong>retro pixel TV</strong>. Plus the <strong>walking cat mascot</strong> that speaks your witty design quotes on click/pet. Replaces the awkward gray box with an expansive, balanced 2-column layout that gives typography weight and clear geometry.
+        </p>
+      </div>
+
+      <!-- Tactile Now Shelf -->
+      <div class="now-shelf-wrap">
+        <div class="shelf-header-row">
+          <span class="shelf-eyebrow">[ Now · Studio Shelf ]</span>
+          <span class="shelf-hint">Interactive artifacts · Hover or click</span>
+        </div>
+
+        <div class="shelf-items-row">
+          <!-- Vinyl -->
+          <div class="shelf-item" id="vinylItem" title="Click to open track on YouTube Music">
+            <span class="shelf-item-label">Listening to</span>
+            <div class="vinyl-player" id="vinylPlayer" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')">
+              <div class="vinyl-disc">
+                <img src="assets/lemon.jpg" class="vinyl-center-art" alt="Lemon label" onerror="this.src='assets/vinyl-label.jpg'">
+                <div class="vinyl-hole"></div>
+              </div>
+              <div class="vinyl-arm"></div>
+            </div>
+            <div class="shelf-item-meta">
+              <span class="shelf-title">Flamin' Hot Lemon</span>
+              <span class="shelf-sub">JAEHYUN · On Loop</span>
+            </div>
+          </div>
+
+          <!-- 3D Book -->
+          <div class="shelf-item">
+            <span class="shelf-item-label">Reading</span>
+            <div class="book-scene" id="bookScene" onmouseenter="openBook()" onmouseleave="closeBook()">
+              <div class="b-book">
+                <div class="b-pages"></div>
+                <div class="b-inside">
+                  "If you could travel in time, who would you want to meet before the coffee gets cold?"
+                </div>
+                <div class="b-cover" id="bookCover">
+                  <div class="b-cover-front">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGDAlq-JExHYzNpnErLPrPNhCdKcbRpTnz2Q&s" alt="Book cover" onerror="this.style.display='none'">
+                    <span style="position:relative; z-index:2; font-size:7px; font-weight:700;">BEFORE THE COFFEE GETS COLD</span>
+                  </div>
+                  <div class="b-cover-back"></div>
+                </div>
+              </div>
+            </div>
+            <div class="shelf-item-meta">
+              <span class="shelf-title">Before the Coffee Gets Cold</span>
+              <span class="shelf-sub">Toshikazu Kawaguchi</span>
+            </div>
+          </div>
+
+          <!-- Pixel TV -->
+          <div class="shelf-item">
+            <span class="shelf-item-label">Watching</span>
+            <div class="tv-wrap">
+              <div class="tv-body">
+                <div class="tv-screen">
+                  <img src="https://mickeyblog.com/wp-content/uploads/2024/05/the-bear-2-640x340.jpeg" alt="The Bear" onerror="this.src='assets/sonder-yt.jpg'">
+                  <div class="tv-live-tag">LIVE</div>
+                  <div class="tv-overlay-title">THE BEAR</div>
+                </div>
+                <div class="tv-controls">
+                  <div class="tv-knob"></div>
+                  <div class="tv-knob"></div>
+                </div>
+              </div>
+              <div class="tv-stand"></div>
+            </div>
+            <div class="shelf-item-meta">
+              <span class="shelf-title">The Bear</span>
+              <span class="shelf-sub">FX · Season 3</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Walking Cat Mascot with Speech Bubble Quotes -->
+        <div class="cat-shelf-runner" id="catRunner">
+          <div class="cat-rover" id="catRover" onclick="boopCat()">
+            <div class="cat-speech-bubble" id="catBubble">available for hire. not available for mornings. ☕</div>
+            <img src="assets/catfooter.gif" class="cat-gif" id="catGif" alt="Walking cat mascot">
+          </div>
+        </div>
+      </div>
+
+      <!-- Balanced 2-Column Split Footer -->
+      <footer class="split-footer">
+        <div class="split-left">
+          <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
+          <p class="footer-sub-lead">
+            Open to conversations about interaction design, speculative futures, physical installations, and game UX.
+          </p>
+          <div class="footer-availability-pill">
+            <span class="availability-dot"></span>
+            <span>Available for full-time &amp; contract projects · Delhi NCR / Remote</span>
+          </div>
+        </div>
+
+        <div class="split-right">
+          <a href="mailto:nishthasinghal.in@gmail.com" class="contact-action-card">
+            <div class="card-label-group">
+              <span class="card-sub-label">Email</span>
+              <span class="card-main-text">nishthasinghal.in@gmail.com</span>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="contact-action-card">
+            <div class="card-label-group">
+              <span class="card-sub-label">Network</span>
+              <span class="card-main-text">LinkedIn Profile</span>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+
+          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-action-card">
+            <div class="card-label-group">
+              <span class="card-sub-label">Curriculum Vitae</span>
+              <span class="card-main-text">Download Resume (PDF)</span>
+            </div>
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+      </footer>
+
+      <div class="footer-colophon">
+        <span>© 2026 Nishtha Singhal · Handcrafted with code &amp; care</span>
+        <span>M.Des New Media Design (NID) · B.Tech (IIIT Delhi)</span>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         DIRECTION B: STORYBOOK / DOODLY THOUGHT MACHINE + WARM CENTERED FOOTER
+         ====================================================================== -->
+    <section id="dir-b" class="direction-pane">
+      <div class="direction-descriptor">
+        <h3>Direction 2: Storybook Doodles &amp; Interactive Thought Capsule</h3>
+        <p>
+          Inspired by <em>Open Doodles</em>, <em>Storybook</em>, and whimsical hand-drawn design journals. Features an interactive <strong>Thought Capsule</strong> that shuffles between your personal philosophy, design mantras, and project insights whenever clicked, paired with an organic, friendly centered contact layout.
+        </p>
+      </div>
+
+      <!-- Doodly Thought Machine -->
+      <div class="doodly-wrap">
+        <div class="doodly-top-row">
+          <span class="doodly-badge">✦ Studio Brainstorm &amp; Thoughts</span>
+          <span style="font-size:0.78rem; color:#777;">Click card to shuffle thought</span>
+        </div>
+
+        <div class="doodle-character-stage">
+          <!-- Doodle avatar / mascot SVG -->
+          <div class="doodle-avatar-box">
+            <svg width="68" height="68" viewBox="0 0 100 100" fill="none" stroke="#1a1a1a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Friendly cat / designer doodle -->
+              <path d="M 25 45 Q 20 20 40 30 Q 50 25 60 30 Q 80 20 75 45 Q 85 70 50 82 Q 15 70 25 45 Z" fill="#faf9f5" />
+              <!-- Eyes -->
+              <circle cx="40" cy="52" r="3" fill="#1a1a1a" />
+              <circle cx="60" cy="52" r="3" fill="#1a1a1a" />
+              <!-- Nose & Smile -->
+              <path d="M 48 60 Q 50 63 52 60" />
+              <path d="M 45 64 Q 50 69 55 64" />
+              <!-- Whiskers -->
+              <line x1="22" y1="54" x2="34" y2="56" />
+              <line x1="20" y1="62" x2="33" y2="61" />
+              <line x1="78" y1="54" x2="66" y2="56" />
+              <line x1="80" y1="62" x2="67" y2="61" />
+            </svg>
+          </div>
+
+          <!-- Dynamic Quote Card -->
+          <div class="doodle-quote-card" onclick="shuffleDoodleQuote()" id="doodleQuoteCard">
+            <p class="doodle-quote-text" id="doodleQuoteText">
+              “Every 'edge case' is someone's entire lived experience. Design starts where assumptions break.”
+            </p>
+            <div class="doodle-quote-footer">
+              <span id="doodleQuoteAuthor">— Nishtha · Design Mantra</span>
+              <span class="doodle-shuffle-hint">Next Thought ↻</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Storybook Centered Contact -->
+      <footer class="storybook-contact">
+        <h2 class="storybook-heading">Open for new conversations.</h2>
+        <p style="color:var(--color-text-secondary); max-width:480px; font-size:0.95rem; line-height:1.5;">
+          Got a project, a speculative idea, or just want to chat about game design and physical interfaces? Let's connect.
+        </p>
+        <div class="storybook-pill-row">
+          <a href="mailto:nishthasinghal.in@gmail.com" class="resume-btn" style="background:#121212; color:#fff;">
+            <span>nishthasinghal.in@gmail.com</span>
+            <span class="link-arrow">↗</span>
+          </a>
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="resume-btn">
+            <span>LinkedIn</span>
+            <span class="link-arrow">↗</span>
+          </a>
+          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="resume-btn">
+            <span>Resume (PDF)</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </div>
+      </footer>
+
+      <div class="footer-colophon">
+        <span>© 2026 Nishtha Singhal</span>
+        <span>Storybook &amp; Organic Illustrations Direction</span>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
+         DIRECTION C: STUDIO DASHBOARD & ROTATING MARQUEE TICKER
+         ====================================================================== -->
+    <section id="dir-c" class="direction-pane">
+      <div class="direction-descriptor">
+        <h3>Direction 3: Modern Studio Dashboard &amp; Quote Ticker</h3>
+        <p>
+          A crisp, architectural dashboard inspired by contemporary Swiss studio sites. Features an integrated 3-part status strip with animated music bars, live reading tracker, and a quote ticker, leading into a structured 3-column colophon footer.
+        </p>
+      </div>
+
+      <!-- Studio Dashboard -->
+      <div class="dashboard-wrap">
+        <div class="dashboard-header-bar">
+          <span>// STUDIO STATUS &amp; CURATION</span>
+          <span>OCT 2026</span>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Cell 1 -->
+          <div class="dashboard-cell">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="dash-cell-label">On Repeat</span>
+              <div class="audio-bars">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+              </div>
+            </div>
+            <span class="dash-cell-value">Flamin' Hot Lemon</span>
+            <span class="dash-cell-sub">JAEHYUN · R&amp;B / Pop</span>
+          </div>
+
+          <!-- Cell 2 -->
+          <div class="dashboard-cell">
+            <span class="dash-cell-label">Current Reading</span>
+            <span class="dash-cell-value">Before the Coffee Gets Cold</span>
+            <span class="dash-cell-sub">Toshikazu Kawaguchi · Fiction</span>
+          </div>
+
+          <!-- Cell 3 -->
+          <div class="dashboard-cell">
+            <span class="dash-cell-label">Screen Study</span>
+            <span class="dash-cell-value">The Bear (Season 3)</span>
+            <span class="dash-cell-sub">FX · High-stress pacing &amp; flow</span>
+          </div>
+        </div>
+
+        <!-- Quote Ticker -->
+        <div class="quote-ticker-bar" onclick="shuffleTickerQuote()">
+          <span class="ticker-icon">✦</span>
+          <div class="ticker-content" id="tickerQuoteText">
+            "Good design is invisible. Bad design becomes an emergency meeting."
+          </div>
+          <span class="ticker-badge">[Click to cycle]</span>
+        </div>
+      </div>
+
+      <!-- Architectural 3-Column Footer -->
+      <footer class="architectural-footer">
+        <div class="arch-col">
+          <h4>01 / INITIATIVE</h4>
+          <p>
+            Interaction and experience design across screens, physical spaces, and speculative objects.
+          </p>
+        </div>
+        <div class="arch-col">
+          <h4>02 / CONTACT</h4>
+          <a href="mailto:nishthasinghal.in@gmail.com">nishthasinghal.in@gmail.com</a>
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer">LinkedIn Profile ↗</a>
+          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer">Download Resume ↗</a>
+        </div>
+        <div class="arch-col">
+          <h4>03 / COLOPHON</h4>
+          <p>Designed and programmed by Nishtha Singhal.</p>
+          <p>Set in Host Grotesk &amp; Geist.</p>
+          <p>© 2026 Nishtha Singhal</p>
+        </div>
+      </footer>
+    </section>
+
+  </main>
+
+  <script>
+    // Tab switching logic
+    function switchDirection(dirId, btn) {
+      document.querySelectorAll('.direction-pane').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.preview-tab-btn').forEach(el => el.classList.remove('active'));
+      
+      document.getElementById(dirId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    // Direction A: Book hover
+    function openBook() {
+      document.getElementById('bookCover').classList.add('open');
+    }
+    function closeBook() {
+      document.getElementById('bookCover').classList.remove('open');
+    }
+
+    // Direction A: Quotes list for cat
+    const catQuotes = [
+      "available for hire. not available for mornings. ☕",
+      "every 'edge case' is someone's entire experience.",
+      "good design is invisible. bad design becomes a meeting.",
+      "five users will tell you more than five hundred assumptions.",
+      "the best interface is the one you stop noticing.",
+      "typography is the voice. layout is the argument.",
+      "physical computing is just teaching matter how to talk back.",
+      "whitespace isn't empty. it's doing the work quietly."
+    ];
+    let catQuoteIdx = 0;
+    function boopCat() {
+      catQuoteIdx = (catQuoteIdx + 1) % catQuotes.length;
+      const bubble = document.getElementById('catBubble');
+      bubble.style.opacity = '0';
+      bubble.style.transform = 'translateX(-50%) translateY(4px)';
+      setTimeout(() => {
+        bubble.textContent = catQuotes[catQuoteIdx];
+        bubble.style.opacity = '1';
+        bubble.style.transform = 'translateX(-50%) translateY(0)';
+      }, 150);
+    }
+
+    // Direction A: Subtle cat patrol animation - flip ONLY catGif so quote never mirrors
+    (function initCatWalk() {
+      const rover = document.getElementById('catRover');
+      const catGif = document.getElementById('catGif');
+      if (!rover || !catGif) return;
+      let pos = 20;
+      let dir = 1;
+      setInterval(() => {
+        pos += dir * 0.15;
+        if (pos > 75) { 
+          dir = -1; 
+          catGif.style.transform = 'scaleX(-1)'; 
+        }
+        if (pos < 10) { 
+          dir = 1; 
+          catGif.style.transform = 'scaleX(1)'; 
+        }
+        rover.style.left = pos + '%';
+      }, 50);
+    })();
+
+    // Direction B: Doodle quote shuffle
+    const doodleQuotes = [
+      { text: "“Every 'edge case' is someone's entire lived experience. Design starts where assumptions break.”", author: "— Nishtha · Design Mantra" },
+      { text: "“The best interfaces don't demand attention: they grant agency and dissolve into use.”", author: "— Interaction Principle" },
+      { text: "“Speculative design asks 'what if?' so we don't end up asking 'how did this happen?'”", author: "— Speculative Bio-HCI" },
+      { text: "“A prototype is worth a thousand meetings.”", author: "— Studio Rule" },
+      { text: "“Physical computing is just teaching physical matter how to converse with humans.”", author: "— New Media Perspective" }
+    ];
+    let dQuoteIdx = 0;
+    function shuffleDoodleQuote() {
+      const card = document.getElementById('doodleQuoteCard');
+      const text = document.getElementById('doodleQuoteText');
+      const auth = document.getElementById('doodleQuoteAuthor');
+      card.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        dQuoteIdx = (dQuoteIdx + 1) % doodleQuotes.length;
+        text.textContent = doodleQuotes[dQuoteIdx].text;
+        auth.textContent = doodleQuotes[dQuoteIdx].author;
+        card.style.transform = 'scale(1)';
+      }, 150);
+    }
+
+    // Direction C: Ticker quote shuffle
+    let tickerQuotes = [
+      "Good design is invisible. Bad design becomes an emergency meeting.",
+      "Whitespace isn't empty space; it's rhythm and room to breathe.",
+      "Five users will always disprove five hundred internal assumptions.",
+      "A prototype turns arguments into observations.",
+      "Craft lives in the transitions nobody explicitly asked for."
+    ];
+    let tIdx = 0;
+    function shuffleTickerQuote() {
+      tIdx = (tIdx + 1) % tickerQuotes.length;
+      document.getElementById('tickerQuoteText').textContent = '"' + tickerQuotes[tIdx] + '"';
+    }
+  </script>
+
+</body>
+</html>
