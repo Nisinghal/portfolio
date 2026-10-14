@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.2">
 </head>
 <body>
 
@@ -181,13 +181,16 @@
 
     </section>
 
-    <!-- Interactive "Now Shelf" & Mascot -->
-    <section class="now-shelf-wrap fade-in" aria-label="Currently listening, reading, and watching">
+    <!-- Unified Interactive Footer (Studio Shelf + Cat Mascot + Contact Hub) -->
+    <footer class="unified-footer-wrap fade-in" id="contact" aria-label="Studio shelf and contact">
+      
+      <!-- Top: Studio Shelf Header -->
       <div class="shelf-header-row">
         <span class="shelf-eyebrow">[ Now · Studio Shelf ]</span>
         <span class="shelf-hint">Interactive artifacts · Hover or click</span>
       </div>
 
+      <!-- 3-Item Artifacts Row (Strict 3-column grid) -->
       <div class="shelf-items-row">
         <!-- Vinyl Turntable -->
         <div class="shelf-item" id="vinylItem" title="Click to open track on YouTube Music">
@@ -254,18 +257,16 @@
         </div>
       </div>
 
-      <!-- Walking Cat Mascot with Speech Bubble Quotes -->
+      <!-- Walking Cat Mascot with Clear Headroom (No overlapping subtitles) -->
       <div class="cat-shelf-runner" id="catRunner">
         <div class="cat-rover" id="catRover" onclick="boopCat()" title="Click to hear a design thought" role="button" tabindex="0">
           <div class="cat-speech-bubble" id="catBubble">available for hire. not available for mornings. ☕</div>
           <img src="assets/catfooter.gif" class="cat-gif" id="catGif" alt="Walking cat mascot">
         </div>
       </div>
-    </section>
 
-    <!-- Balanced 2-Column Split Footer -->
-    <footer class="split-footer fade-in">
-      <div class="split-left">
+      <!-- Unified Conversation & Contact Hub (Horizontal pills row) -->
+      <div class="unified-contact-section">
         <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
         <p class="footer-sub-lead">
           Open to conversations about interaction design, speculative futures, physical installations, and game UX.
@@ -274,39 +275,33 @@
           <span class="availability-dot" aria-hidden="true"></span>
           <span>Available for full-time &amp; contract projects · Delhi NCR / Remote</span>
         </div>
+
+        <!-- Horizontal Action Buttons -->
+        <nav class="unified-contact-links" aria-label="Contact methods">
+          <a href="mailto:nishthasinghal.in@gmail.com" class="contact-pill-btn" id="email-link">
+            <span>nishthasinghal.in@gmail.com</span>
+            <span class="link-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="contact-pill-btn" id="linkedin-link">
+            <span>LinkedIn</span>
+            <span class="link-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-pill-btn" id="footer-resume-link">
+            <span>Resume (PDF)</span>
+            <span class="link-arrow" aria-hidden="true">↗</span>
+          </a>
+        </nav>
       </div>
 
-      <div class="split-right">
-        <a href="mailto:nishthasinghal.in@gmail.com" class="contact-action-card" id="email-link">
-          <div class="card-label-group">
-            <span class="card-sub-label">Email</span>
-            <span class="card-main-text">nishthasinghal.in@gmail.com</span>
-          </div>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
-
-        <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="contact-action-card" id="linkedin-link">
-          <div class="card-label-group">
-            <span class="card-sub-label">Network</span>
-            <span class="card-main-text">LinkedIn Profile</span>
-          </div>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
-
-        <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-action-card" id="footer-resume-link">
-          <div class="card-label-group">
-            <span class="card-sub-label">Curriculum Vitae</span>
-            <span class="card-main-text">Download Resume (PDF)</span>
-          </div>
-          <span class="link-arrow" aria-hidden="true">↗</span>
-        </a>
+      <!-- Colophon Bar -->
+      <div class="footer-colophon">
+        <span>© 2026 Nishtha Singhal · Handcrafted with code &amp; care</span>
+        <span>M.Des New Media Design (NID) · B.Tech (IIIT Delhi)</span>
       </div>
+
     </footer>
-
-    <div class="footer-colophon">
-      <span>© 2026 Nishtha Singhal · Handcrafted with code &amp; care</span>
-      <span>M.Des New Media Design (NID) · B.Tech (IIIT Delhi)</span>
-    </div>
 
   </main>
 
