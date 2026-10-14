@@ -9,9 +9,9 @@
   <!-- Modern Typefaces: Geist, Host Grotesk & IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
 
@@ -181,37 +181,48 @@
 
     </section>
 
-    <!-- Seamless Natural Footer (Studio Vignette + Walking Cat Companion + Contact Hub) -->
-    <footer class="portfolio-footer fade-in" id="contact" aria-label="Studio favorites, living thoughts, and contact">
+    <!-- Storybook Studio Canvas & Organic Footer (Drawing directly from Pinterest References 1-5) -->
+    <footer class="storybook-footer fade-in" id="contact" aria-label="Studio shelf, thoughts, and contact">
       
-      <!-- Studio Vignette: Current Favorites (Seamless & unboxed, integrated naturally into the page) -->
-      <div class="studio-vignette">
-        <div class="vignette-header">
-          <span class="vignette-eyebrow">Studio Shelf · Current Favorites</span>
-          <span class="vignette-hint">Hover or tap to interact</span>
+      <!-- Decorative Doodled Sparkles (References 4 & 5) -->
+      <div class="footer-doodle-sparkle sparkle-top-left" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+      </div>
+      <div class="footer-doodle-sparkle sparkle-top-right" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 3c0 4.5-4.5 9-9 9 4.5 0 9 4.5 9 9 0-4.5 4.5-9 9-9-4.5 0-9-4.5-9-9z"/></svg>
+      </div>
+
+      <!-- Studio Shelf: Watercolor Swatches & Tactile Artifacts (References 1 & 2) -->
+      <div class="studio-garden-vignette">
+        <div class="garden-header">
+          <div class="garden-title-wrap">
+            <span class="garden-handwritten-tag">studio notes · current obsessions</span>
+            <h3 class="garden-title">Things inspiring the studio right now</h3>
+          </div>
+          <span class="garden-interaction-hint">hover or tap to explore ✧</span>
         </div>
 
-        <div class="vignette-items">
-          <!-- 01. Vinyl Track (Clickable to YouTube Music) -->
-          <div class="vignette-item" id="vinylItem" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" title="Click to listen to Flamin' Hot Lemon on YouTube Music">
-            <span class="vignette-tag">listening to</span>
-            <div class="vignette-art-stage">
+        <div class="garden-specimens-row">
+          
+          <!-- 01. Listening to: Flamin' Hot Lemon on Terracotta Watercolor Wash -->
+          <div class="garden-specimen" id="vinylItem" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" title="Click to listen to Flamin' Hot Lemon on YouTube Music">
+            <div class="swatch-watercolor wash-terracotta">
               <div class="natural-vinyl-disc">
                 <img src="assets/lemon.jpg" class="natural-vinyl-art" alt="Lemon album artwork" onerror="this.src='assets/vinyl-label.jpg'">
                 <div class="natural-vinyl-hole"></div>
               </div>
               <div class="natural-vinyl-arm"></div>
             </div>
-            <div class="vignette-caption">
-              <span class="vignette-name">Flamin' Hot Lemon</span>
-              <span class="vignette-sub">JAEHYUN · On Loop</span>
+            <div class="garden-specimen-meta">
+              <span class="specimen-hand-label">listening to</span>
+              <span class="specimen-work-title">Flamin' Hot Lemon</span>
+              <span class="specimen-work-sub">JAEHYUN · on loop</span>
             </div>
           </div>
 
-          <!-- 02. 3D Flip Book -->
-          <div class="vignette-item" id="bookSpecimen" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" title="Hover or tap to open book">
-            <span class="vignette-tag">reading</span>
-            <div class="vignette-art-stage">
+          <!-- 02. Reading: Before the Coffee Gets Cold on Matcha/Sage Watercolor Wash -->
+          <div class="garden-specimen" id="bookSpecimen" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" title="Hover or tap to open book">
+            <div class="swatch-watercolor wash-sage">
               <div class="book-scene" id="bookScene">
                 <div class="b-book">
                   <div class="b-pages"></div>
@@ -229,35 +240,45 @@
                 </div>
               </div>
             </div>
-            <div class="vignette-caption">
-              <span class="vignette-name">Before the Coffee Gets Cold</span>
-              <span class="vignette-sub">Toshikazu Kawaguchi · Fiction</span>
+            <div class="garden-specimen-meta">
+              <span class="specimen-hand-label">reading</span>
+              <span class="specimen-work-title">Before the Coffee Gets Cold</span>
+              <span class="specimen-work-sub">Toshikazu Kawaguchi · fiction</span>
             </div>
           </div>
 
-          <!-- 03. Screen Study Frame -->
-          <div class="vignette-item" id="tvSpecimen" title="The Bear on FX">
-            <span class="vignette-tag">watching</span>
-            <div class="vignette-art-stage">
-              <div class="screen-study-frame">
+          <!-- 03. Screen Study: The Bear on Warm Custard Watercolor Wash -->
+          <div class="garden-specimen" id="tvSpecimen" title="The Bear on FX">
+            <div class="swatch-watercolor wash-custard">
+              <div class="screen-art-frame">
                 <img src="https://mickeyblog.com/wp-content/uploads/2024/05/the-bear-2-640x340.jpeg" alt="The Bear TV still" onerror="this.src='assets/sonder-yt.jpg'">
                 <span class="screen-live-tag">FX · Season 3</span>
               </div>
             </div>
-            <div class="vignette-caption">
-              <span class="vignette-name">The Bear</span>
-              <span class="vignette-sub">High-stress pacing &amp; flow</span>
+            <div class="garden-specimen-meta">
+              <span class="specimen-hand-label">watching</span>
+              <span class="specimen-work-title">The Bear</span>
+              <span class="specimen-work-sub">high-stress pacing &amp; flow</span>
             </div>
           </div>
+
         </div>
       </div>
 
-      <!-- Walking Cat Track with Auto-Rotating Thought Bubble -->
-      <div class="shelf-cat-track" id="shelfCatWrap" aria-label="Walking companion cat">
+      <!-- Whimsical Storybook Cat Meadow (References 3, 4, 5) -->
+      <div class="storybook-cat-meadow" id="shelfCatWrap" aria-label="Walking companion cat in meadow">
+        <!-- Organic wavy ground track -->
+        <svg class="meadow-wavy-path" viewBox="0 0 1000 24" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0,12 Q125,4 250,12 T500,12 T750,12 T1000,12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-dasharray="4,6"/>
+        </svg>
+
         <div class="cat-rover" id="catRover">
-          <div class="cat-pet" id="catPet" onclick="boopCat()" title="Click to hear a thought" role="button" tabindex="0">
+          <div class="cat-pet" id="catPet" onclick="boopCat()" title="Click to hear a design thought" role="button" tabindex="0">
+            <!-- Taped Paper Speech Bubble (Inspired by Reference 3 & 4) -->
             <div class="cat-speech-bubble visible" id="catBubble" aria-live="polite">
-              “The act of creating something is always more important than the result.”
+              <div class="washi-tape-pin" aria-hidden="true"></div>
+              <span class="bubble-quote-text" id="bubbleQuoteText">“The act of creating something is always more important than the result.”</span>
+              <span class="bubble-sub-hint" aria-hidden="true">tap cat to shuffle ↺</span>
             </div>
             <div class="cat-gif-wrap">
               <img src="assets/catfooter.gif" class="cat-gif" id="catGif" alt="Walking companion cat">
@@ -267,37 +288,40 @@
         </div>
       </div>
 
-      <!-- Contact Section (Heading, NO description line, availability badge & horizontal action pills) -->
-      <div class="footer-contact-block">
-        <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
+      <!-- Human & Poetic Contact Invitation (References 1, 2 & 5) -->
+      <div class="editorial-contact-stage">
+        <div class="contact-invitation-wrap">
+          <span class="contact-handwritten-eyebrow">say hello · open for collaboration</span>
+          <h2 class="contact-editorial-heading">Let's build something <em>thoughtful</em> together.</h2>
+        </div>
         
         <div class="footer-availability-pill">
           <span class="availability-dot" aria-hidden="true"></span>
           <span>Available for full-time &amp; contract projects · Delhi NCR / Remote</span>
         </div>
 
-        <!-- Horizontal Action Buttons -->
-        <nav class="footer-contact-links" aria-label="Contact methods">
-          <a href="mailto:nishthasinghal.in@gmail.com" class="contact-pill-btn" id="email-link">
+        <!-- Artisan Contact Links -->
+        <nav class="artisan-contact-links" aria-label="Contact methods">
+          <a href="mailto:nishthasinghal.in@gmail.com" class="artisan-contact-btn" id="email-link">
             <span>nishthasinghal.in@gmail.com</span>
             <span class="link-arrow" aria-hidden="true">↗</span>
           </a>
 
-          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="contact-pill-btn" id="linkedin-link">
+          <a href="https://www.linkedin.com/in/nishthasinghal12/" target="_blank" rel="noopener noreferrer" class="artisan-contact-btn" id="linkedin-link">
             <span>LinkedIn</span>
             <span class="link-arrow" aria-hidden="true">↗</span>
           </a>
 
-          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="contact-pill-btn" id="footer-resume-link">
+          <a href="assets/Nishtha_Singhal_Resume.pdf" target="_blank" rel="noopener noreferrer" class="artisan-contact-btn" id="footer-resume-link">
             <span>Resume (PDF)</span>
             <span class="link-arrow" aria-hidden="true">↗</span>
           </a>
         </nav>
       </div>
 
-      <!-- Colophon Bar -->
+      <!-- Colophon Bar with Hand-drawn Touches -->
       <div class="footer-colophon">
-        <span>© 2026 Nishtha Singhal · Handcrafted with care</span>
+        <span>© 2026 Nishtha Singhal · Handcrafted with care ✧</span>
         <span>M.Des New Media Design (NID) · B.Tech (IIIT Delhi)</span>
       </div>
 

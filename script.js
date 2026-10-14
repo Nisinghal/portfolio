@@ -297,13 +297,18 @@ let isBubblePaused = false;
 
 function setBubbleQuote(idx) {
   const bubble = document.getElementById('catBubble');
+  const quoteText = document.getElementById('bubbleQuoteText');
   if (!bubble) return;
   catQuoteIdx = idx % catQuotes.length;
   bubble.style.opacity = '0';
   bubble.style.transform = 'translateX(var(--bubble-shift, -50%)) translateY(4px)';
 
   setTimeout(() => {
-    bubble.textContent = catQuotes[catQuoteIdx];
+    if (quoteText) {
+      quoteText.textContent = catQuotes[catQuoteIdx];
+    } else {
+      bubble.textContent = catQuotes[catQuoteIdx];
+    }
     positionBubble();
     bubble.style.opacity = '1';
     bubble.style.transform = 'translateX(var(--bubble-shift, -50%)) translateY(0)';
