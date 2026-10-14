@@ -260,8 +260,7 @@ function initHeroAscii() {
 }
 
 // ==========================================================================
-// NATURAL ORGANIC FOOTER: LIVING THOUGHT CAPSULE
-// Smooth automatic 6s rotation + instant shuffle on click + pause on hover
+// SEAMLESS NATURAL FOOTER: WALKING CAT COMPANION & STUDIO VIGNETTE
 // ==========================================================================
 
 // 3D Book hover & touch toggle
@@ -278,90 +277,135 @@ function toggleBook() {
   if (cover) cover.classList.toggle('open');
 }
 
-// Curated studio thoughts & reflections (drawing from references & philosophy)
-const studioThoughts = [
-  {
-    quote: "“The act of creating something is always more important than the result.”",
-    author: "— Creative Philosophy · Studio Note"
-  },
-  {
-    quote: "“Made with hands: it does not need to be perfect in order to qualify.”",
-    author: "— Craft & Materiality"
-  },
-  {
-    quote: "“Every 'edge case' is someone's entire lived experience. Design starts where assumptions break.”",
-    author: "— Nishtha · Interaction Principle"
-  },
-  {
-    quote: "“As long as we keep on creating and help each other along the way.”",
-    author: "— Creative Kinship"
-  },
-  {
-    quote: "“Physical computing is just teaching physical matter how to converse with humans.”",
-    author: "— New Media Perspective"
-  },
-  {
-    quote: "“Good design dissolves quietly into use; it grants agency rather than demanding attention.”",
-    author: "— Interaction Design"
-  }
+// Curated living thoughts & reflections (creative philosophy & visual references)
+const catQuotes = [
+  "“The act of creating something is always more important than the result.”",
+  "“Made with hands: does not need to be perfect in order to qualify! ✨”",
+  "“As long as we keep on creating & help each other along the way.”",
+  "“available for hire. not available for mornings. ☕”",
+  "“every 'edge case' is someone's entire lived experience.”",
+  "“good design dissolves quietly into use; it grants agency rather than demanding attention.”",
+  "“physical computing is just teaching physical matter how to converse with humans.”",
+  "“whitespace isn't empty. it's doing the work quietly.”",
+  "“five users will tell you more than five hundred assumptions.”",
+  "“typography is the voice. layout is the argument.”"
 ];
 
-let thoughtIdx = 0;
-let thoughtTimer = null;
+let catQuoteIdx = 0;
+let bubbleTimer = null;
+let isBubblePaused = false;
 
-function renderThought(targetIdx) {
-  const textEl = document.getElementById('thoughtText');
-  const authorEl = document.getElementById('thoughtAuthor');
-  const counterEl = document.getElementById('thoughtCounter');
-  if (!textEl || !authorEl) return;
-
-  textEl.style.opacity = '0';
-  textEl.style.transform = 'translateY(4px)';
-  authorEl.style.opacity = '0';
+function setBubbleQuote(idx) {
+  const bubble = document.getElementById('catBubble');
+  if (!bubble) return;
+  catQuoteIdx = idx % catQuotes.length;
+  bubble.style.opacity = '0';
+  bubble.style.transform = 'translateX(var(--bubble-shift, -50%)) translateY(4px)';
 
   setTimeout(() => {
-    thoughtIdx = (targetIdx !== undefined ? targetIdx : (thoughtIdx + 1) % studioThoughts.length);
-    const item = studioThoughts[thoughtIdx];
-    textEl.textContent = item.quote;
-    authorEl.textContent = item.author;
-    if (counterEl) {
-      counterEl.textContent = `Note 0${thoughtIdx + 1} of 0${studioThoughts.length}`;
-    }
-    textEl.style.opacity = '1';
-    textEl.style.transform = 'translateY(0)';
-    authorEl.style.opacity = '1';
+    bubble.textContent = catQuotes[catQuoteIdx];
+    positionBubble();
+    bubble.style.opacity = '1';
+    bubble.style.transform = 'translateX(var(--bubble-shift, -50%)) translateY(0)';
   }, 180);
 }
 
-function shuffleThought() {
-  const nextIdx = (thoughtIdx + 1) % studioThoughts.length;
-  renderThought(nextIdx);
-  restartThoughtTimer();
+function nextQuote() {
+  setBubbleQuote(catQuoteIdx + 1);
 }
 
-function startThoughtTimer() {
-  if (thoughtTimer) clearInterval(thoughtTimer);
-  thoughtTimer = setInterval(() => {
-    renderThought((thoughtIdx + 1) % studioThoughts.length);
-  }, 6000);
-}
-
-function restartThoughtTimer() {
-  startThoughtTimer();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const card = document.getElementById('thoughtCard');
-  if (card) {
-    card.addEventListener('mouseenter', () => {
-      if (thoughtTimer) clearInterval(thoughtTimer);
-    });
-    card.addEventListener('mouseleave', () => {
-      startThoughtTimer();
-    });
+function boopCat() {
+  const pet = document.getElementById('catPet');
+  if (pet) {
+    pet.classList.remove('booped');
+    void pet.offsetWidth; // trigger reflow
+    pet.classList.add('booped');
+    setTimeout(() => pet.classList.remove('booped'), 350);
   }
-  startThoughtTimer();
+  nextQuote();
+  restartBubbleTimer();
+}
+
+function startBubbleTimer() {
+  if (bubbleTimer) clearInterval(bubbleTimer);
+  bubbleTimer = setInterval(() => {
+    if (!isBubblePaused) {
+      nextQuote();
+    }
+  }, 4800);
+}
+
+function restartBubbleTimer() {
+  startBubbleTimer();
+}
+
+function positionBubble() {
+  const wrap = document.getElementById('shelfCatWrap');
+  const rover = document.getElementById('catRover');
+  const bubble = document.getElementById('catBubble');
+  if (!wrap || !rover || !bubble) return;
+
+  const wrapW = wrap.offsetWidth;
+  const catW = 76;
+  const catLeft = rover.offsetLeft;
+  const catCx = catLeft + catW / 2;
+
+  const bubW = Math.min(260, wrapW - 24);
+  const minCx = bubW / 2 + 12;
+  const maxCx = wrapW - bubW / 2 - 12;
+  const clampedCx = Math.max(minCx, Math.min(maxCx, catCx));
+
+  const shiftPx = clampedCx - catCx;
+  bubble.style.setProperty('--bubble-shift', `calc(-50% + ${shiftPx}px)`);
+
+  const bubbleLeft = clampedCx - bubW / 2;
+  const arrowPct = Math.max(14, Math.min(86, ((catCx - bubbleLeft) / bubW) * 100));
+  bubble.style.setProperty('--arrow-left', `${arrowPct.toFixed(1)}%`);
+}
+
+// Walking cat patrol along shelf
+document.addEventListener('DOMContentLoaded', () => {
+  const wrap = document.getElementById('shelfCatWrap');
+  const rover = document.getElementById('catRover');
+  const pet = document.getElementById('catPet');
+  const bubble = document.getElementById('catBubble');
+  if (!wrap || !rover || !pet) return;
+
+  // Pause speech bubble rotation when hovering so user can comfortably read
+  pet.addEventListener('mouseenter', () => { isBubblePaused = true; });
+  pet.addEventListener('mouseleave', () => { isBubblePaused = false; });
+  if (bubble) {
+    bubble.addEventListener('mouseenter', () => { isBubblePaused = true; });
+    bubble.addEventListener('mouseleave', () => { isBubblePaused = false; });
+  }
+
+  // Smooth walk loop
+  let posPct = 18;
+  let dir = 1;
+  let isWalking = true;
+
+  setInterval(() => {
+    if (!isWalking) return;
+    posPct += dir * 0.14;
+
+    if (posPct > 78) {
+      dir = -1;
+      pet.classList.add('flipped'); // Flips ONLY the cat sprite via CSS
+    } else if (posPct < 8) {
+      dir = 1;
+      pet.classList.remove('flipped');
+    }
+
+    rover.style.left = posPct + '%';
+    positionBubble();
+  }, 50);
+
+  // Initialize speech bubble quote and start auto-rotation
+  positionBubble();
+  startBubbleTimer();
+  window.addEventListener('resize', positionBubble);
 });
+
 
 
 

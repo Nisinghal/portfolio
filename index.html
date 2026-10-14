@@ -181,41 +181,37 @@
 
     </section>
 
-    <!-- Natural Organic Interactive Footer (Artisan Specimen Swatches + Living Thought Strip + Contact Hub) -->
-    <footer class="natural-footer-wrap fade-in" id="contact" aria-label="Studio artifacts, changing reflections, and contact">
+    <!-- Seamless Natural Footer (Studio Vignette + Walking Cat Companion + Contact Hub) -->
+    <footer class="portfolio-footer fade-in" id="contact" aria-label="Studio favorites, living thoughts, and contact">
       
-      <!-- Studio Specimen Cards Header (Drawing from Reference 1: Color Code Your Life) -->
-      <div class="specimen-header-row">
-        <span class="specimen-header-title">Studio Specimen Cards · Current Favorites</span>
-        <span class="specimen-header-hint">Hover or tap to interact</span>
-      </div>
+      <!-- Studio Vignette: Current Favorites (Seamless & unboxed, integrated naturally into the page) -->
+      <div class="studio-vignette">
+        <div class="vignette-header">
+          <span class="vignette-eyebrow">Studio Shelf · Current Favorites</span>
+          <span class="vignette-hint">Hover or tap to interact</span>
+        </div>
 
-      <!-- 3 Artisan Specimen Cards (Watercolor Swatches & Tactile Artifacts) -->
-      <div class="specimen-cards-grid">
-        
-        <!-- Specimen 01: Sound (Warm Terracotta Wash Swatch) -->
-        <div class="specimen-card swatch-terracotta" id="vinylItem" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" title="Click to listen to Flamin' Hot Lemon on YouTube Music">
-          <div class="specimen-inner-frame">
-            <span class="specimen-tag">01 · On Repeat</span>
-            <div class="specimen-art-stage">
+        <div class="vignette-items">
+          <!-- 01. Vinyl Track (Clickable to YouTube Music) -->
+          <div class="vignette-item" id="vinylItem" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" title="Click to listen to Flamin' Hot Lemon on YouTube Music">
+            <span class="vignette-tag">listening to</span>
+            <div class="vignette-art-stage">
               <div class="natural-vinyl-disc">
                 <img src="assets/lemon.jpg" class="natural-vinyl-art" alt="Lemon album artwork" onerror="this.src='assets/vinyl-label.jpg'">
                 <div class="natural-vinyl-hole"></div>
               </div>
               <div class="natural-vinyl-arm"></div>
             </div>
-            <div class="specimen-caption">
-              <span class="specimen-title">Flamin' Hot Lemon</span>
-              <span class="specimen-sub">JAEHYUN · On Loop</span>
+            <div class="vignette-caption">
+              <span class="vignette-name">Flamin' Hot Lemon</span>
+              <span class="vignette-sub">JAEHYUN · On Loop</span>
             </div>
           </div>
-        </div>
 
-        <!-- Specimen 02: Literary (Sage / Matcha Wash Swatch with 3D Flip Book) -->
-        <div class="specimen-card swatch-sage" id="bookSpecimen" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" title="Hover or tap to flip book">
-          <div class="specimen-inner-frame">
-            <span class="specimen-tag">02 · Reading</span>
-            <div class="specimen-art-stage">
+          <!-- 02. 3D Flip Book -->
+          <div class="vignette-item" id="bookSpecimen" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" title="Hover or tap to open book">
+            <span class="vignette-tag">reading</span>
+            <div class="vignette-art-stage">
               <div class="book-scene" id="bookScene">
                 <div class="b-book">
                   <div class="b-pages"></div>
@@ -233,51 +229,46 @@
                 </div>
               </div>
             </div>
-            <div class="specimen-caption">
-              <span class="specimen-title">Before the Coffee Gets Cold</span>
-              <span class="specimen-sub">Toshikazu Kawaguchi · Fiction</span>
+            <div class="vignette-caption">
+              <span class="vignette-name">Before the Coffee Gets Cold</span>
+              <span class="vignette-sub">Toshikazu Kawaguchi · Fiction</span>
             </div>
           </div>
-        </div>
 
-        <!-- Specimen 03: Screen Study (Warm Custard Swatch with Cinematic Frame) -->
-        <div class="specimen-card swatch-custard" id="tvSpecimen" title="The Bear on FX">
-          <div class="specimen-inner-frame">
-            <span class="specimen-tag">03 · Screen Study</span>
-            <div class="specimen-art-stage">
-              <div class="specimen-film-frame">
+          <!-- 03. Screen Study Frame -->
+          <div class="vignette-item" id="tvSpecimen" title="The Bear on FX">
+            <span class="vignette-tag">watching</span>
+            <div class="vignette-art-stage">
+              <div class="screen-study-frame">
                 <img src="https://mickeyblog.com/wp-content/uploads/2024/05/the-bear-2-640x340.jpeg" alt="The Bear TV still" onerror="this.src='assets/sonder-yt.jpg'">
-                <span class="film-live-pill">FX · Season 3</span>
+                <span class="screen-live-tag">FX · Season 3</span>
               </div>
             </div>
-            <div class="specimen-caption">
-              <span class="specimen-title">The Bear</span>
-              <span class="specimen-sub">High-stress pacing &amp; flow</span>
+            <div class="vignette-caption">
+              <span class="vignette-name">The Bear</span>
+              <span class="vignette-sub">High-stress pacing &amp; flow</span>
             </div>
           </div>
         </div>
-
       </div>
 
-      <!-- Living Thought Capsule (Inspired by References 3, 4 & 5: Layered Paper & Creative Mantras) -->
-      <!-- Changes automatically every 6 seconds AND immediately on click! -->
-      <div class="natural-thought-capsule" id="thoughtCard" onclick="shuffleThought()" title="Click to shuffle thought" role="button" tabindex="0">
-        <div class="washi-tape-accent" aria-hidden="true"></div>
-        <div class="thought-top-bar">
-          <span class="thought-counter-badge" id="thoughtCounter">Note 01 of 06</span>
-          <span class="thought-shuffle-hint">Click or wait to shuffle ↻</span>
-        </div>
-        <p class="thought-quote-body" id="thoughtText">
-          “The act of creating something is always more important than the result.”
-        </p>
-        <div class="thought-bottom-bar">
-          <span class="thought-author-tag" id="thoughtAuthor">— Creative Philosophy · Studio Note</span>
-          <span class="thought-pulse-dot" aria-hidden="true"></span>
+      <!-- Walking Cat Track with Auto-Rotating Thought Bubble -->
+      <div class="shelf-cat-track" id="shelfCatWrap" aria-label="Walking companion cat">
+        <div class="cat-rover" id="catRover">
+          <div class="cat-pet" id="catPet" onclick="boopCat()" title="Click to hear a thought" role="button" tabindex="0">
+            <div class="cat-speech-bubble visible" id="catBubble" aria-live="polite">
+              “The act of creating something is always more important than the result.”
+            </div>
+            <div class="cat-gif-wrap">
+              <img src="assets/catfooter.gif" class="cat-gif" id="catGif" alt="Walking companion cat">
+            </div>
+            <img src="assets/catheader.gif" class="cat-nap" id="catNap" alt="Cat resting">
+          </div>
         </div>
       </div>
 
-      <!-- Contact Hub (Clean heading, NO description line, availability badge & horizontal pills) -->
-      <div class="natural-contact-hub">
+      <!-- Contact Section (Heading, NO description line, availability badge & horizontal action pills) -->
+      <div class="footer-contact-block">
         <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
         
         <div class="footer-availability-pill">
@@ -286,7 +277,7 @@
         </div>
 
         <!-- Horizontal Action Buttons -->
-        <nav class="natural-contact-links" aria-label="Contact methods">
+        <nav class="footer-contact-links" aria-label="Contact methods">
           <a href="mailto:nishthasinghal.in@gmail.com" class="contact-pill-btn" id="email-link">
             <span>nishthasinghal.in@gmail.com</span>
             <span class="link-arrow" aria-hidden="true">↗</span>
@@ -306,7 +297,7 @@
 
       <!-- Colophon Bar -->
       <div class="footer-colophon">
-        <span>© 2026 Nishtha Singhal · Handcrafted with code &amp; care</span>
+        <span>© 2026 Nishtha Singhal · Handcrafted with care</span>
         <span>M.Des New Media Design (NID) · B.Tech (IIIT Delhi)</span>
       </div>
 
