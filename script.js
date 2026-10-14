@@ -260,7 +260,8 @@ function initHeroAscii() {
 }
 
 // ==========================================================================
-// INTERACTIVE "NOW SHELF" & CAT MASCOT
+// NATURAL ORGANIC FOOTER: LIVING THOUGHT CAPSULE
+// Smooth automatic 6s rotation + instant shuffle on click + pause on hover
 // ==========================================================================
 
 // 3D Book hover & touch toggle
@@ -277,53 +278,90 @@ function toggleBook() {
   if (cover) cover.classList.toggle('open');
 }
 
-// Quotes cycle for cat companion
-const catQuotes = [
-  "available for hire. not available for mornings. ☕",
-  "every 'edge case' is someone's entire lived experience.",
-  "good design is invisible. bad design becomes an emergency meeting.",
-  "five users will tell you more than five hundred assumptions.",
-  "the best interface is the one you stop noticing.",
-  "typography is the voice. layout is the argument.",
-  "physical computing is just teaching matter how to talk back.",
-  "whitespace isn't empty. it's doing the work quietly."
+// Curated studio thoughts & reflections (drawing from references & philosophy)
+const studioThoughts = [
+  {
+    quote: "“The act of creating something is always more important than the result.”",
+    author: "— Creative Philosophy · Studio Note"
+  },
+  {
+    quote: "“Made with hands: it does not need to be perfect in order to qualify.”",
+    author: "— Craft & Materiality"
+  },
+  {
+    quote: "“Every 'edge case' is someone's entire lived experience. Design starts where assumptions break.”",
+    author: "— Nishtha · Interaction Principle"
+  },
+  {
+    quote: "“As long as we keep on creating and help each other along the way.”",
+    author: "— Creative Kinship"
+  },
+  {
+    quote: "“Physical computing is just teaching physical matter how to converse with humans.”",
+    author: "— New Media Perspective"
+  },
+  {
+    quote: "“Good design dissolves quietly into use; it grants agency rather than demanding attention.”",
+    author: "— Interaction Design"
+  }
 ];
-let catQuoteIdx = 0;
 
-function boopCat() {
-  catQuoteIdx = (catQuoteIdx + 1) % catQuotes.length;
-  const bubble = document.getElementById('catBubble');
-  if (!bubble) return;
-  bubble.style.opacity = '0';
-  bubble.style.transform = 'translateX(-50%) translateY(4px)';
+let thoughtIdx = 0;
+let thoughtTimer = null;
+
+function renderThought(targetIdx) {
+  const textEl = document.getElementById('thoughtText');
+  const authorEl = document.getElementById('thoughtAuthor');
+  const counterEl = document.getElementById('thoughtCounter');
+  if (!textEl || !authorEl) return;
+
+  textEl.style.opacity = '0';
+  textEl.style.transform = 'translateY(4px)';
+  authorEl.style.opacity = '0';
+
   setTimeout(() => {
-    bubble.textContent = catQuotes[catQuoteIdx];
-    bubble.style.opacity = '1';
-    bubble.style.transform = 'translateX(-50%) translateY(0)';
-  }, 150);
+    thoughtIdx = (targetIdx !== undefined ? targetIdx : (thoughtIdx + 1) % studioThoughts.length);
+    const item = studioThoughts[thoughtIdx];
+    textEl.textContent = item.quote;
+    authorEl.textContent = item.author;
+    if (counterEl) {
+      counterEl.textContent = `Note 0${thoughtIdx + 1} of 0${studioThoughts.length}`;
+    }
+    textEl.style.opacity = '1';
+    textEl.style.transform = 'translateY(0)';
+    authorEl.style.opacity = '1';
+  }, 180);
 }
 
-// Subtle cat patrol animation along shelf
-// Flipping ONLY the cat sprite so the speech bubble and quote text NEVER mirror
-document.addEventListener('DOMContentLoaded', () => {
-  const rover = document.getElementById('catRover');
-  const catGif = document.getElementById('catGif');
-  if (!rover || !catGif) return;
+function shuffleThought() {
+  const nextIdx = (thoughtIdx + 1) % studioThoughts.length;
+  renderThought(nextIdx);
+  restartThoughtTimer();
+}
 
-  let pos = 20;
-  let dir = 1;
-  setInterval(() => {
-    pos += dir * 0.15;
-    if (pos > 75) {
-      dir = -1;
-      catGif.style.transform = 'scaleX(-1)';
-    }
-    if (pos < 10) {
-      dir = 1;
-      catGif.style.transform = 'scaleX(1)';
-    }
-    rover.style.left = pos + '%';
-  }, 50);
+function startThoughtTimer() {
+  if (thoughtTimer) clearInterval(thoughtTimer);
+  thoughtTimer = setInterval(() => {
+    renderThought((thoughtIdx + 1) % studioThoughts.length);
+  }, 6000);
+}
+
+function restartThoughtTimer() {
+  startThoughtTimer();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const card = document.getElementById('thoughtCard');
+  if (card) {
+    card.addEventListener('mouseenter', () => {
+      if (thoughtTimer) clearInterval(thoughtTimer);
+    });
+    card.addEventListener('mouseleave', () => {
+      startThoughtTimer();
+    });
+  }
+  startThoughtTimer();
 });
+
 
 

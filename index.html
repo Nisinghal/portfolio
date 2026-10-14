@@ -9,9 +9,9 @@
   <!-- Modern Typefaces: Geist, Host Grotesk & IBM Plex Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Host+Grotesk:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=2.2">
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
@@ -181,103 +181,112 @@
 
     </section>
 
-    <!-- Unified Interactive Footer (Studio Shelf + Cat Mascot + Contact Hub) -->
-    <footer class="unified-footer-wrap fade-in" id="contact" aria-label="Studio shelf and contact">
+    <!-- Natural Organic Interactive Footer (Artisan Specimen Swatches + Living Thought Strip + Contact Hub) -->
+    <footer class="natural-footer-wrap fade-in" id="contact" aria-label="Studio artifacts, changing reflections, and contact">
       
-      <!-- Top: Studio Shelf Header -->
-      <div class="shelf-header-row">
-        <span class="shelf-eyebrow">[ Now · Studio Shelf ]</span>
-        <span class="shelf-hint">Interactive artifacts · Hover or click</span>
+      <!-- Studio Specimen Cards Header (Drawing from Reference 1: Color Code Your Life) -->
+      <div class="specimen-header-row">
+        <span class="specimen-header-title">Studio Specimen Cards · Current Favorites</span>
+        <span class="specimen-header-hint">Hover or tap to interact</span>
       </div>
 
-      <!-- 3-Item Artifacts Row (Strict 3-column grid) -->
-      <div class="shelf-items-row">
-        <!-- Vinyl Turntable -->
-        <div class="shelf-item" id="vinylItem" title="Click to open track on YouTube Music">
-          <span class="shelf-item-label">Listening to</span>
-          <div class="vinyl-player" id="vinylPlayer" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" aria-label="Listening to Flamin' Hot Lemon by JAEHYUN">
-            <div class="vinyl-disc">
-              <img src="assets/lemon.jpg" class="vinyl-center-art" alt="Lemon album art" onerror="this.src='assets/vinyl-label.jpg'">
-              <div class="vinyl-hole"></div>
+      <!-- 3 Artisan Specimen Cards (Watercolor Swatches & Tactile Artifacts) -->
+      <div class="specimen-cards-grid">
+        
+        <!-- Specimen 01: Sound (Warm Terracotta Wash Swatch) -->
+        <div class="specimen-card swatch-terracotta" id="vinylItem" onclick="window.open('https://music.youtube.com/watch?v=FbtA4LuoJUI', '_blank')" role="button" tabindex="0" title="Click to listen to Flamin' Hot Lemon on YouTube Music">
+          <div class="specimen-inner-frame">
+            <span class="specimen-tag">01 · On Repeat</span>
+            <div class="specimen-art-stage">
+              <div class="natural-vinyl-disc">
+                <img src="assets/lemon.jpg" class="natural-vinyl-art" alt="Lemon album artwork" onerror="this.src='assets/vinyl-label.jpg'">
+                <div class="natural-vinyl-hole"></div>
+              </div>
+              <div class="natural-vinyl-arm"></div>
             </div>
-            <div class="vinyl-arm"></div>
-          </div>
-          <div class="shelf-item-meta">
-            <span class="shelf-title">Flamin' Hot Lemon</span>
-            <span class="shelf-sub">JAEHYUN · On Loop</span>
+            <div class="specimen-caption">
+              <span class="specimen-title">Flamin' Hot Lemon</span>
+              <span class="specimen-sub">JAEHYUN · On Loop</span>
+            </div>
           </div>
         </div>
 
-        <!-- 3D Interactive Book -->
-        <div class="shelf-item">
-          <span class="shelf-item-label">Reading</span>
-          <div class="book-scene" id="bookScene" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" aria-label="Book: Before the Coffee Gets Cold">
-            <div class="b-book">
-              <div class="b-pages"></div>
-              <div class="b-inside">
-                "If you could travel in time, who would you want to meet before the coffee gets cold?"
-              </div>
-              <div class="b-cover" id="bookCover">
-                <div class="b-cover-front">
-                  <span class="book-spine-text">Toshikazu Kawaguchi</span>
-                  <div class="book-title-emboss">BEFORE THE COFFEE GETS COLD</div>
-                  <span class="book-coffee-icon">☕</span>
+        <!-- Specimen 02: Literary (Sage / Matcha Wash Swatch with 3D Flip Book) -->
+        <div class="specimen-card swatch-sage" id="bookSpecimen" onmouseenter="openBook()" onmouseleave="closeBook()" onclick="toggleBook()" role="button" tabindex="0" title="Hover or tap to flip book">
+          <div class="specimen-inner-frame">
+            <span class="specimen-tag">02 · Reading</span>
+            <div class="specimen-art-stage">
+              <div class="book-scene" id="bookScene">
+                <div class="b-book">
+                  <div class="b-pages"></div>
+                  <div class="b-inside">
+                    <p class="b-inside-quote">“If you could travel in time, who would you want to meet before the coffee gets cold?”</p>
+                  </div>
+                  <div class="b-cover" id="bookCover">
+                    <div class="b-cover-front">
+                      <span class="book-spine-author">Toshikazu Kawaguchi</span>
+                      <div class="book-cover-title">BEFORE THE COFFEE GETS COLD</div>
+                      <span class="book-coffee-icon">☕</span>
+                    </div>
+                    <div class="b-cover-back"></div>
+                  </div>
                 </div>
-                <div class="b-cover-back"></div>
               </div>
             </div>
-          </div>
-          <div class="shelf-item-meta">
-            <span class="shelf-title">Before the Coffee Gets Cold</span>
-            <span class="shelf-sub">Toshikazu Kawaguchi</span>
+            <div class="specimen-caption">
+              <span class="specimen-title">Before the Coffee Gets Cold</span>
+              <span class="specimen-sub">Toshikazu Kawaguchi · Fiction</span>
+            </div>
           </div>
         </div>
 
-        <!-- Retro Pixel TV -->
-        <div class="shelf-item">
-          <span class="shelf-item-label">Watching</span>
-          <div class="tv-wrap" title="The Bear on FX">
-            <div class="tv-body">
-              <div class="tv-screen">
-                <img src="https://mickeyblog.com/wp-content/uploads/2024/05/the-bear-2-640x340.jpeg" alt="The Bear" onerror="this.src='assets/sonder-yt.jpg'">
-                <div class="tv-live-tag">LIVE</div>
-                <div class="tv-overlay-title">THE BEAR</div>
-              </div>
-              <div class="tv-controls">
-                <div class="tv-knob"></div>
-                <div class="tv-knob"></div>
+        <!-- Specimen 03: Screen Study (Warm Custard Swatch with Cinematic Frame) -->
+        <div class="specimen-card swatch-custard" id="tvSpecimen" title="The Bear on FX">
+          <div class="specimen-inner-frame">
+            <span class="specimen-tag">03 · Screen Study</span>
+            <div class="specimen-art-stage">
+              <div class="specimen-film-frame">
+                <img src="https://mickeyblog.com/wp-content/uploads/2024/05/the-bear-2-640x340.jpeg" alt="The Bear TV still" onerror="this.src='assets/sonder-yt.jpg'">
+                <span class="film-live-pill">FX · Season 3</span>
               </div>
             </div>
-            <div class="tv-stand"></div>
-          </div>
-          <div class="shelf-item-meta">
-            <span class="shelf-title">The Bear</span>
-            <span class="shelf-sub">FX · Season 3</span>
+            <div class="specimen-caption">
+              <span class="specimen-title">The Bear</span>
+              <span class="specimen-sub">High-stress pacing &amp; flow</span>
+            </div>
           </div>
         </div>
+
       </div>
 
-      <!-- Walking Cat Mascot with Clear Headroom (No overlapping subtitles) -->
-      <div class="cat-shelf-runner" id="catRunner">
-        <div class="cat-rover" id="catRover" onclick="boopCat()" title="Click to hear a design thought" role="button" tabindex="0">
-          <div class="cat-speech-bubble" id="catBubble">available for hire. not available for mornings. ☕</div>
-          <img src="assets/catfooter.gif" class="cat-gif" id="catGif" alt="Walking cat mascot">
+      <!-- Living Thought Capsule (Inspired by References 3, 4 & 5: Layered Paper & Creative Mantras) -->
+      <!-- Changes automatically every 6 seconds AND immediately on click! -->
+      <div class="natural-thought-capsule" id="thoughtCard" onclick="shuffleThought()" title="Click to shuffle thought" role="button" tabindex="0">
+        <div class="washi-tape-accent" aria-hidden="true"></div>
+        <div class="thought-top-bar">
+          <span class="thought-counter-badge" id="thoughtCounter">Note 01 of 06</span>
+          <span class="thought-shuffle-hint">Click or wait to shuffle ↻</span>
         </div>
-      </div>
-
-      <!-- Unified Conversation & Contact Hub (Horizontal pills row) -->
-      <div class="unified-contact-section">
-        <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
-        <p class="footer-sub-lead">
-          Open to conversations about interaction design, speculative futures, physical installations, and game UX.
+        <p class="thought-quote-body" id="thoughtText">
+          “The act of creating something is always more important than the result.”
         </p>
+        <div class="thought-bottom-bar">
+          <span class="thought-author-tag" id="thoughtAuthor">— Creative Philosophy · Studio Note</span>
+          <span class="thought-pulse-dot" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <!-- Contact Hub (Clean heading, NO description line, availability badge & horizontal pills) -->
+      <div class="natural-contact-hub">
+        <h2 class="footer-big-heading">Let's build something thoughtful together.</h2>
+        
         <div class="footer-availability-pill">
           <span class="availability-dot" aria-hidden="true"></span>
           <span>Available for full-time &amp; contract projects · Delhi NCR / Remote</span>
         </div>
 
         <!-- Horizontal Action Buttons -->
-        <nav class="unified-contact-links" aria-label="Contact methods">
+        <nav class="natural-contact-links" aria-label="Contact methods">
           <a href="mailto:nishthasinghal.in@gmail.com" class="contact-pill-btn" id="email-link">
             <span>nishthasinghal.in@gmail.com</span>
             <span class="link-arrow" aria-hidden="true">↗</span>
