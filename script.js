@@ -430,11 +430,11 @@ function initFooterAscii() {
         }
         if (!char || !char.trim()) continue;
 
-        // Warm subtle contrast: visible texture that never clashes with foreground text & buttons
-        const grayVal = Math.round(180 - d * 115);
-        const baseAlpha = 0.09 + d * 0.30;
-        const cursorAlpha = cursorInfluence * 0.25;
-        const alpha = Math.min(0.58, isGlitch ? Math.min(0.7, 0.32 + cursorAlpha) : (baseAlpha + cursorAlpha));
+        // Subtle monochromatic contrast matching the hero header & gallery palette
+        const grayVal = Math.round(170 - d * 130);
+        const baseAlpha = 0.08 + d * 0.28;
+        const cursorAlpha = cursorInfluence * 0.22;
+        const alpha = Math.min(0.48, isGlitch ? Math.min(0.65, 0.28 + cursorAlpha) : (baseAlpha + cursorAlpha));
 
         ctx.fillStyle = `rgba(${grayVal}, ${grayVal}, ${grayVal}, ${alpha.toFixed(2)})`;
         ctx.fillText(char, cx, cy);
@@ -540,7 +540,7 @@ function positionBubble() {
   const catLeft = rover.offsetLeft;
   const catCx = catLeft + catW / 2;
 
-  const bubW = bubble.offsetWidth || Math.min(320, wrapW - 24);
+  const bubW = bubble.offsetWidth || Math.min(520, wrapW - 24);
   const minCx = bubW / 2 + 12;
   const maxCx = wrapW - bubW / 2 - 12;
   const clampedCx = Math.max(minCx, Math.min(maxCx, catCx));
@@ -549,7 +549,7 @@ function positionBubble() {
   bubble.style.setProperty('--bubble-shift', `calc(-50% + ${shiftPx}px)`);
 
   const bubbleLeft = clampedCx - bubW / 2;
-  const arrowPct = Math.max(12, Math.min(88, ((catCx - bubbleLeft) / bubW) * 100));
+  const arrowPct = Math.max(6, Math.min(94, ((catCx - bubbleLeft) / bubW) * 100));
   bubble.style.setProperty('--arrow-left', `${arrowPct.toFixed(1)}%`);
 }
 
