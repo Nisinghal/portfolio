@@ -45,8 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Initialize subtle generative ASCII header canvas
+  // Initialize subtle generative ASCII header & footer canvases
   initHeroAscii();
+  initFooterAscii();
 });
 
 // ==========================================================================
@@ -260,22 +261,206 @@ function initHeroAscii() {
 }
 
 // ==========================================================================
-// SEAMLESS NATURAL FOOTER: WALKING CAT COMPANION & STUDIO VIGNETTE
+// INTERACTIVE DENSER ASCII FIELD (Footer Effect)
+// Replicates the hero header effect, tuned denser and non-blocking
 // ==========================================================================
+function initFooterAscii() {
+  const canvas = document.getElementById('footer-ascii-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-// 3D Book hover & touch toggle
-function openBook() {
-  const cover = document.getElementById('bookCover');
-  if (cover) cover.classList.add('open');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // Denser, finer character matrix
+  const CHARS = [' ', '·', '·', '.', '·', ':', '+', '•', 'o', '*', '#'];
+  const GLITCH = ['|', '/', '\\', '!', '%', '$', '?', '~', '^', '<', '>', '×', '○'];
+  // Denser cell geometry: smaller cells (6px x 12px) produce ~2x cell density
+  const FS = 10, CW = 6, CH = 12;
+
+  let W, H, cols, rows, raf;
+  const t0 = performance.now();
+
+  const mouse = {
+    x: -9999,
+    y: -9999,
+    targetX: -9999,
+    targetY: -9999,
+    active: false,
+    radius: 130,
+    intensity: 0
+  };
+
+  function cellHash(col, row) {
+    return Math.abs(Math.sin(col * 149.3 + row * 283.1 + col * row * 0.043));
+  }
+
+  function resize() {
+    const parent = canvas.parentElement;
+    if (!parent) return;
+    W = canvas.offsetWidth || parent.offsetWidth;
+    H = canvas.offsetHeight || parent.offsetHeight;
+    canvas.width = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(W / CW) + 2;
+    rows = Math.ceil(H / CH) + 2;
+    ctx.font = `${FS}px "IBM Plex Mono", "Geist Mono", monospace`;
+    ctx.textBaseline = 'top';
+  }
+
+  // Smooth cursor tracking across footer
+  window.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    if (e.clientY >= rect.top - 20 && e.clientY <= rect.bottom + 20 &&
+        e.clientX >= rect.left - 20 && e.clientX <= rect.right + 20) {
+      mouse.targetX = e.clientX - rect.left;
+      mouse.targetY = e.clientY - rect.top;
+      mouse.active = true;
+    } else {
+      mouse.active = false;
+    }
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.active = false;
+  });
+
+  window.addEventListener('touchmove', e => {
+    if (e.touches && e.touches[0]) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      if (touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+        mouse.targetX = touch.clientX - rect.left;
+        mouse.targetY = touch.clientY - rect.top;
+        mouse.active = true;
+      }
+    }
+  }, { passive: true });
+
+  window.addEventListener('touchend', () => {
+    mouse.active = false;
+  });
+
+  // Pause when off-screen to preserve performance
+  let isVisible = true;
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible && !raf) {
+        raf = requestAnimationFrame(draw);
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+  }
+
+  function draw() {
+    if (!isVisible) {
+      raf = null;
+      return;
+    }
+
+    ctx.clearRect(0, 0, W, H);
+    const t = (performance.now() - t0) * 0.001;
+    const epoch = Math.floor(t / 5);
+
+    if (mouse.active) {
+      mouse.x += (mouse.targetX - mouse.x) * 0.12;
+      mouse.y += (mouse.targetY - mouse.y) * 0.12;
+      mouse.intensity += (1 - mouse.intensity) * 0.08;
+    } else {
+      mouse.intensity += (0 - mouse.intensity) * 0.03;
+    }
+
+    for (let row = 0; row < rows; row++) {
+      const cy = row * CH;
+      const ny = row / rows;
+
+      for (let col = 0; col < cols; col++) {
+        const cx = col * CW;
+        const nx = col / cols;
+
+        // Denser base distribution with smooth variation
+        const hDist = Math.abs(nx - 0.5) * 2;
+        let d = 0.20 + 0.25 * hDist;
+
+        // Per-cell stable phase
+        const phase = cellHash(col, row) * Math.PI * 6;
+
+        // Harmonic breathing waves (replicating top effect, tuned denser)
+        d += 0.11 * Math.sin(t * 0.36 + nx * 5.2 + ny * 3.4 + phase * 0.1);
+        d += 0.07 * Math.sin(t * 0.23 + nx * 8.6 - ny * 5.8 + phase * 0.07);
+        d += 0.04 * Math.cos(t * 0.17 - nx * 3.8 + ny * 4.9 + phase * 0.05);
+
+        // Periodic subtle ripple burst
+        const bx = cellHash(epoch, 11);
+        const by = cellHash(5, epoch);
+        const bd = Math.sqrt(Math.pow(nx - bx, 2) * 0.6 + Math.pow(ny - by, 2));
+        const burst = Math.max(0, 0.22 - bd) * Math.sin(t * 7.5 - bd * 16);
+        d += burst * 0.35;
+
+        // Shimmer line
+        d += Math.sin(row * 0.55 + t * 0.6) * 0.02;
+
+        // Cursor ripple perturbation
+        let isCursorActive = false;
+        let cursorInfluence = 0;
+        if (mouse.intensity > 0.01 && mouse.x > -1000) {
+          const dx = cx - mouse.x;
+          const dy = cy - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < mouse.radius) {
+            cursorInfluence = (1 - dist / mouse.radius) * mouse.intensity;
+            const ripple = Math.sin(dist * 0.11 - t * 5.0);
+            d += cursorInfluence * 0.55 * (0.65 + 0.35 * ripple);
+            isCursorActive = cursorInfluence > 0.22;
+          }
+        }
+
+        d = Math.max(0, Math.min(1, d));
+        if (d < 0.05) continue;
+
+        let char = CHARS[Math.min(CHARS.length - 1, Math.floor(d * CHARS.length))];
+
+        const gHash = cellHash(col + epoch * 89, row + epoch * 61);
+        const isGlitch = (gHash < 0.05 && d > 0.22) || (isCursorActive && gHash < 0.16);
+        if (isGlitch) {
+          char = GLITCH[Math.floor(gHash * (GLITCH.length / 0.16)) % GLITCH.length];
+        }
+        if (!char || !char.trim()) continue;
+
+        // Warm subtle contrast: visible texture that never clashes with foreground text & buttons
+        const grayVal = Math.round(180 - d * 115);
+        const baseAlpha = 0.09 + d * 0.30;
+        const cursorAlpha = cursorInfluence * 0.25;
+        const alpha = Math.min(0.58, isGlitch ? Math.min(0.7, 0.32 + cursorAlpha) : (baseAlpha + cursorAlpha));
+
+        ctx.fillStyle = `rgba(${grayVal}, ${grayVal}, ${grayVal}, ${alpha.toFixed(2)})`;
+        ctx.fillText(char, cx, cy);
+      }
+    }
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  let debounce;
+  window.addEventListener('resize', () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => {
+      cancelAnimationFrame(raf);
+      resize();
+      draw();
+    }, 150);
+  });
+
+  resize();
+  draw();
 }
-function closeBook() {
-  const cover = document.getElementById('bookCover');
-  if (cover) cover.classList.remove('open');
-}
-function toggleBook() {
-  const cover = document.getElementById('bookCover');
-  if (cover) cover.classList.toggle('open');
-}
+
+// ==========================================================================
+// FREE-ROAMING CAT COMPANION
+// ==========================================================================
 
 // Curated living thoughts & reflections (creative philosophy & visual references)
 const catQuotes = [
@@ -355,7 +540,7 @@ function positionBubble() {
   const catLeft = rover.offsetLeft;
   const catCx = catLeft + catW / 2;
 
-  const bubW = Math.min(260, wrapW - 24);
+  const bubW = bubble.offsetWidth || Math.min(320, wrapW - 24);
   const minCx = bubW / 2 + 12;
   const maxCx = wrapW - bubW / 2 - 12;
   const clampedCx = Math.max(minCx, Math.min(maxCx, catCx));
@@ -364,7 +549,7 @@ function positionBubble() {
   bubble.style.setProperty('--bubble-shift', `calc(-50% + ${shiftPx}px)`);
 
   const bubbleLeft = clampedCx - bubW / 2;
-  const arrowPct = Math.max(14, Math.min(86, ((catCx - bubbleLeft) / bubW) * 100));
+  const arrowPct = Math.max(12, Math.min(88, ((catCx - bubbleLeft) / bubW) * 100));
   bubble.style.setProperty('--arrow-left', `${arrowPct.toFixed(1)}%`);
 }
 
