@@ -1,4 +1,4 @@
-﻿# Operating System Files
+# Operating System Files
 .DS_Store
 Thumbs.db
 desktop.ini
@@ -16,5 +16,7 @@ assets/sonder/references-web.jpg
 
 # Development logs & temporary files
 *.log
+*.bak
+*.backup*
 .system_generated/
 scratch/
